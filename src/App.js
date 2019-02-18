@@ -38,10 +38,8 @@ const handle = (props) => {
 };
 
 const options = [
-  { value: 'demo_score', label: 'Democracy Score' },
-  { value: 'debt_to_foreigners', label: 'Debt to Foreigners' },
-  { value: 'hdi', label: 'Human Development Index' },
-  { value: 'internet_users', label: 'Internet Users' }
+  { value: 'hdi', label: 'Human Development Index', domain: [0,1] },
+  {value:"suicide_per_100000_people", label:"Suicides per 100 000 people", domain: [0,50]}
 ];
 
 class App extends Component {
@@ -50,9 +48,10 @@ class App extends Component {
     this.state = {
       year: 2011,
       dataMax: 2016,
-      mapVar:{ value: 'demo_score', label: 'Democracy Score' },
-      graphVar:"importance_of_democracy",
-      geographyPaths: []
+      mapVar:  { value: 'hdi', label: 'Human Development Index', domain:[0,1] },
+      graphVar:  { value: 'hdi', label: 'Human Development Index', domain:[0,1] },
+      geographyPaths: [],
+      optimize:false
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleVarChange=this.handleVarChange.bind(this)
@@ -116,7 +115,9 @@ class App extends Component {
             if(countryIndex != -1){
 
               countries[countryIndex].score = filtered
+              console.log(countries[countryIndex].score)
             }else{
+              console.log(row)
               switch (row.country){
                 case "Cape Verde": {
                   var i = countries.findIndex((c) => {return(c.properties.NAME=="Cabo Verde")})
@@ -165,7 +166,7 @@ class App extends Component {
             if(cIndex != -1){
 
               countries[cIndex].properties.capital = row
-              console.log(countries[cIndex])
+
             }
             else{
               console.log(row)
@@ -183,19 +184,24 @@ class App extends Component {
   handleChange(e){
 
     this.setState({
-      year:e
+      year:e,
+      optimize:false
     })
+    setTimeout(this.setState({optimize:true}), 10)
 
   }
   handleVarChange(e){
 
     this.setState({
-      mapVar:e
+      mapVar:e,
+      optimize:false
     })
     this.loadData();
+    setTimeout(this.setState({optimize:true}), 10)
   }
 
   render() {
+
     const sliderStyle={
       width:"80%",
       marginLeft:"10%"
@@ -217,7 +223,7 @@ class App extends Component {
     return (
       <div style={appStyle}>
         <div style={mapWrap}>
-          <Map year={this.state.year} var={this.state.mapVar.value} data={this.state.geographyPaths} />
+          <Map year={this.state.year} optimize={this.state.optimize} var={this.state.mapVar} data={this.state.geographyPaths} />
         </div>
         <div style={selectStyle}>
         <Select
@@ -225,7 +231,7 @@ class App extends Component {
           onChange={this.handleVarChange}
           options={options}
           name="value"
-          aria-label={this.state.mapVar}
+          aria-label={this.state.mapVar.label}
         />
         </div>
         <div style={sliderStyle}>
