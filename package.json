@@ -1,0 +1,36 @@
+{
+  "name": "proj2",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "chroma-js": "^2.0.3",
+    "d3": "^5.7.0",
+    "npm": "^6.7.0",
+    "rc-slider": "^8.6.5",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
+    "react-loading": "^2.0.3",
+    "react-scripts": "2.1.4",
+    "react-select": "^2.4.0",
+    "react-simple-maps": "^0.12.1",
+    "react-vis": "^1.11.6",
+    "topojson-client": "^3.0.0",
+    "victory": "^31.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
