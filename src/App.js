@@ -79,7 +79,7 @@ class App extends Component {
         console.log(fileName)
         Promise.all([
           d3.csv(fileName,(row)=> {
-            const countryIndex = countries.findIndex((c) => {return(c.properties.NAME==row.country || c.properties.NAME_LONG ==row.country || c.properties.FORMAL_EN ==row.country)})
+            const countryIndex = countries.findIndex((c) => {return(c.properties.NAME===row.country || c.properties.NAME_LONG ===row.country || c.properties.FORMAL_EN ===row.country)})
 
             if(Object.keys(row)[Object.keys(row).length - 2]>datamax){
               datamax = parseInt(Object.keys(row)[Object.keys(row).length - 2]);
@@ -90,19 +90,19 @@ class App extends Component {
               .reduce((obj, key) => {
                 switch (this.props.var){
                   case "internet_users":{
-                    obj[key] = row[key]==""||row[key]==0?undefined:row[key];
+                    obj[key] = row[key]===""||row[key]===0?undefined:row[key];
                     return obj;
                   }
                   case "demo_score":{
-                      obj[key] = row[key]==""?undefined:row[key];
+                      obj[key] = row[key]===""?undefined:row[key];
                       return obj;
                   }
                   case "hdi":{
-                      obj[key] = row[key]==""?undefined:row[key];
+                      obj[key] = row[key]===""?undefined:row[key];
                       return obj;
                   }
                   default:{
-                    obj[key] = row[key]==""?undefined:row[key];
+                    obj[key] = row[key]===""?undefined:row[key];
                     return obj;
                   }
                 }
@@ -120,32 +120,32 @@ class App extends Component {
               console.log(row)
               switch (row.country){
                 case "Cape Verde": {
-                  var i = countries.findIndex((c) => {return(c.properties.NAME=="Cabo Verde")})
+                  var i = countries.findIndex((c) => {return(c.properties.NAME==="Cabo Verde")})
                   countries[i].score = filtered;
                   break
                 }
                 case "Congo, Dem. Rep.": {
-                  var i = countries.findIndex((c) => {return(c.properties.NAME=="Dem. Rep. Congo")})
+                  var i = countries.findIndex((c) => {return(c.properties.NAME==="Dem. Rep. Congo")})
                   countries[i].score = filtered;
                   break
                 }
                 case "Congo, Rep.": {
-                  var i = countries.findIndex((c) => {return(c.properties.NAME=="Congo")})
+                  var i = countries.findIndex((c) => {return(c.properties.NAME==="Congo")})
                   countries[i].score = filtered;
                   break
                 }
                 case "Cote d'Ivoire": {
-                  var i = countries.findIndex((c) => {return(c.properties.NAME=="Côte d'Ivoire")})
+                  var i = countries.findIndex((c) => {return(c.properties.NAME==="Côte d'Ivoire")})
                   countries[i].score = filtered;
                   break
                 }
                 case "Macedonia, FYR": {
-                  var i = countries.findIndex((c) => {return(c.properties.NAME=="Macedonia")})
+                  var i = countries.findIndex((c) => {return(c.properties.NAME==="Macedonia")})
                   countries[i].score = filtered;
                   break
                 }
                 case "Lao": {
-                  var i = countries.findIndex((c) => {return(c.properties.NAME=="Laos")})
+                  var i = countries.findIndex((c) => {return(c.properties.NAME==="Laos")})
                   countries[i].score = filtered;
                   break
                 }
@@ -159,7 +159,7 @@ class App extends Component {
           }),
           d3.csv("/data/country-capitals.csv", (row)=>{
 
-            const cIndex = countries.findIndex((c) => {return(c.properties.ISO_A2==row.CountryCode || c.properties.NAME_LONG ==row.CountryName)})
+            const cIndex = countries.findIndex((c) => {return(c.properties.ISO_A2===row.CountryCode || c.properties.NAME_LONG ===row.CountryName)})
 
             row.coordinates = [parseFloat(row.CapitalLongitude), parseFloat(row.CapitalLatitude)]
 
@@ -211,19 +211,21 @@ class App extends Component {
       marginLeft:"10%"
     }
     const appStyle={
-      maxHeight:"95%",
-      maxWidth: "100%"
+      width:"100%"
     }
     const mapWrap={
-
+      width:"100%"
     }
     const graphWrap={
       float:"right"
     }
     return (
       <div style={appStyle}>
+
         <div style={mapWrap}>
+
           <Map year={this.state.year} optimize={this.state.optimize} var={this.state.mapVar} data={this.state.geographyPaths} />
+
         </div>
         <div style={selectStyle}>
         <Select
@@ -234,18 +236,18 @@ class App extends Component {
           aria-label={this.state.mapVar.label}
         />
         </div>
-        <div style={sliderStyle}>
-
-        <h4></h4>
 
         <br/>
-          <Slider
-            min={1980} max={this.state.dataMax} value={this.state.year}
-            handle={handle}
-            marks={marks}
-            included={false}
-            onChange={this.handleChange}
-          />
+        <div style={sliderStyle}>
+        <Slider
+          min={1980} max={this.state.dataMax} value={this.state.year}
+          handle={handle}
+          marks={marks}
+          included={false}
+          onChange={this.handleChange}
+        />
+
+
 
 
         </div>

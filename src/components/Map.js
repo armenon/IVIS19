@@ -9,6 +9,7 @@ import {
   Graticule,
   Markers,
    Marker,
+    Annotation,
 } from "react-simple-maps"
 import { scaleLinear } from "d3-scale"
 import chroma from "chroma-js"
@@ -19,10 +20,9 @@ import { geoAzimuthalEqualArea } from "d3-geo"
 
 const wrapperStyles = {
   width: "100%",
-  maxWidth: 980,
-  maxHeight:"100%",
-  margin: "0 0",
-  fontFamily: "Roboto, sans-serif",
+
+  margin: "0 auto",
+  fontFamily: "Roboto, sans-serif"
 
 }
 const demoScale = scaleLinear()
@@ -43,6 +43,12 @@ const hdiScale = scaleLinear()
 const debtScale = scaleLinear()
       .domain([0,50])
       .range(["#f2f2f2","#ff3300"])
+      .unknown(["#f2f2f2"])
+
+
+const popScale = scaleLinear()
+      .domain([0,100000000,1400000000])
+      .range(["#CFD8DC","#607D8B","#37474F"])
       .unknown(["#f2f2f2"])
 
 
@@ -89,10 +95,10 @@ const defaultSubregions=[
 
 
     { name: "Northern Africa", coordinates: [10 ,30], zoom:5 },
-    { name: "Eastern Africa", coordinates: [38 ,6], zoom:8 },
-    { name: "Middle Africa", coordinates: [28 ,-3], zoom:7 },
+    { name: "Eastern Africa", coordinates: [38 ,-3], zoom:5 },
+    { name: "Middle Africa", coordinates: [28 ,0], zoom:6 },
     { name: "Southern Africa", coordinates: [25 ,-25], zoom:8 },
-    { name: "Western Africa", coordinates: [-5 ,10], zoom:7 },
+    { name: "Western Africa", coordinates: [-5 ,15], zoom:7 },
 
     { name: "Northern Europe", coordinates: [5 ,63], zoom:8 },
     { name: "Eastern Europe", coordinates: [23 ,52], zoom:10 },
@@ -122,7 +128,7 @@ class Map extends Component {
       level:1,
       optimize:false,
       area:"World",
-      subarea:"-",
+      subarea:"",
       regions: defaultRegions,
       highlighted: "",
       hovered: false
@@ -149,7 +155,7 @@ class Map extends Component {
     console.log("Zoom")
     switch (this.state.level){
       case 1:{
-        const region = defaultRegions.find((o)=> o.name==r.REGION_UN)
+        const region = defaultRegions.find((o)=> o.name===r.REGION_UN)
         console.log(e)
 
         this.setState({
@@ -159,14 +165,14 @@ class Map extends Component {
           level:2,
 
         })
-        if(region.name=="Oceania"){
+        if(region.name==="Oceania"){
           this.setState({
             level:3
           })
         }
         break;
       }case 2:{
-        const subregion = defaultSubregions.find((o)=> o.name==r.SUBREGION)
+        const subregion = defaultSubregions.find((o)=> o.name===r.SUBREGION)
         console.log(e)
         this.setState({
           subarea:subregion.name,
@@ -179,7 +185,7 @@ class Map extends Component {
       }case 3:{
         this.setState({
           area:"World",
-          subarea:"-",
+          subarea:"",
           center: [0,20],
           zoom: 1,
           level:1
@@ -192,7 +198,7 @@ class Map extends Component {
 
   // handleMove = geo => {
   //    if (this.state.hovered) return;
-  //    this.state.level==1
+  //    this.state.level===1
   //    ?this.setState({
   //      hovered: true,
   //      highlighted: geo.properties.REGION_UN
@@ -231,17 +237,22 @@ class Map extends Component {
     const headerStyle={
       textAlign:"center"
     }
+    const mapStyle={
+
+    }
     const legendStyle={
-      marginLeft:"20%"
+      width:"10%",
+      margin: "0 auto",
+      display:"inline"
+
     }
 
     return (
 
         <div style={wrapperStyles}>
-        <div style={headerStyle}>
-          <h4  > {this.state.area}</h4>
-          <h5> {this.state.subarea}</h5>
-          </div>
+
+          <div>
+
         <ComposableMap
 
              projectionConfig={{
@@ -258,7 +269,7 @@ class Map extends Component {
             <Geographies geography={this.props.data} disableOptimization={this.props.optimize}>
               {(geographies, projection) =>
                 geographies.map((geography, i) =>
-                 exclude.indexOf(geography.properties.ISO_A3) == -1 &&
+                 exclude.indexOf(geography.properties.ISO_A3) === -1 &&
                  (
                   <Geography
                     key={`${geography.properties.ADM0_A3}-${i}`}
@@ -269,22 +280,22 @@ class Map extends Component {
                     onClick={(e)=>this.handleZoom(e,geography.properties)}
 
                    data-html={true}
-                   data-tip={geography.properties.NAME + " <br/>"+this.props.var.label+": " + (geography.score || {})[this.props.year]}
+                   data-tip={geography.properties.NAME + " <br/> Population: " + geography.properties.POP_EST}
                     style={{
                       default: {
-                        fill:fillProperties((geography.score || {})[this.props.year]),
+                        fill:popScale(geography.properties.POP_EST),
                         stroke: "#999999",
                         strokeWidth: 0.2,
                         outline: "none",
                       },
                       hover: {
-                        fill:"#707070",
+                        fill:"#999999",
                         stroke: "#607D8B",
                         strokeWidth: 0.5,
                         outline: "none",
                       },
                       pressed: {
-                        fill: "#FF5722",
+                        fill: "#404040",
                         stroke: "#607D8B",
                         strokeWidth: 0.4,
                         outline: "none",
@@ -295,6 +306,7 @@ class Map extends Component {
               )}
             </Geographies>
 
+
             <Markers>
               {this.props.data.filter(c => typeof(c.properties.capital) !== "undefined").map((country, i) => {
                 const debt = Math.random()*100;
@@ -304,14 +316,16 @@ class Map extends Component {
                     <circle
                       cx={0}
                       cy={0}
-                      r={markerScale(debt)*this.state.level}
-                      fill="rgba(255,87,34,0.8)"
+                      r={markerScale(debt)*this.state.zoom*0.6}
+                      fill={fillProperties((country.score || {})[this.props.year])}
                       stroke="#607D8B"
                       strokeWidth="2"
                       onClick={()=>console.log(country)}
                       data-html={true}
                       data-tip={country.properties.NAME +
-                                " <br/> Debt: " + debt}
+                                " <br/> Debt: " + debt +
+                                " <br/>"+this.props.var.label+": " + (country.score || {})[this.props.year]
+                                }
                     />
                   </Marker>
                 )}
@@ -322,7 +336,24 @@ class Map extends Component {
         </ComposableMap>
 
         <ReactTooltip />
+
         <div style={legendStyle}>
+        <div style={headerStyle}>
+          {this.state.subarea===""?this.state.area:this.state.subarea}
+
+          </div>
+        Population:
+        <ContinuousColorLegend
+          startTitle={"0"}
+          midTitle={"100 000 000"}
+          endTitle={"1 400 000 000"}
+          startColor={popScale(0)}
+          midColor={popScale(100000000)}
+          endColor={popScale(1400000000)}
+          width={300}
+
+        />
+        {this.props.var.label}:
         <ContinuousColorLegend
           startTitle={this.props.var.domain[0]}
           midTitle={(this.props.var.domain[0]+this.props.var.domain[1])/2}
@@ -331,8 +362,9 @@ class Map extends Component {
           endColor={fillProperties(this.props.var.domain[1])}
           width={300}
         />
-        </div>
 
+        </div>
+</div>
         </div>
 
     )
