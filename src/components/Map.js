@@ -241,9 +241,8 @@ class Map extends Component {
 
     }
     const legendStyle={
-      width:"10%",
-      margin: "0 auto",
-      display:"inline"
+      width:"30%",
+      marginLeft:"10%",
 
     }
 
@@ -316,7 +315,7 @@ class Map extends Component {
                     <circle
                       cx={0}
                       cy={0}
-                      r={markerScale(debt)*this.state.zoom*0.6}
+                      r={markerScale(debt)*this.state.zoom*0.5}
                       fill={fillProperties((country.score || {})[this.props.year])}
                       stroke="#607D8B"
                       strokeWidth="2"
@@ -336,12 +335,11 @@ class Map extends Component {
         </ComposableMap>
 
         <ReactTooltip />
-
-        <div style={legendStyle}>
         <div style={headerStyle}>
           {this.state.subarea===""?this.state.area:this.state.subarea}
+        </div>
+        <div style={legendStyle}>
 
-          </div>
         Population:
         <ContinuousColorLegend
           startTitle={"0"}
@@ -364,7 +362,7 @@ class Map extends Component {
         />
 
         </div>
-</div>
+        </div>
         </div>
 
     )
