@@ -39,7 +39,7 @@ const plotScale=scaleLinear()
 
 const plotColor=scaleThreshold()
       .domain([100,200])
-      .range(["white", 'black'])
+      .range(["#ffffff", '#2a2a2a'])
       .unknown('gray')
 
 class ScatterPlot extends Component {
@@ -50,11 +50,17 @@ class ScatterPlot extends Component {
     this.handleHover = this.handleHover.bind(this)
     this.renderTooltip = this.renderTooltip.bind(this)
     this.state = {
-
+      height:null,
+      width:null,
       country: null
     }
   }
-
+  componentWillMount(){
+    this.setState({
+      height: window.innerHeight-80,
+      width: window.innerWidth
+    })
+  }
   componentDidUpdate(){
     ReactTooltip.rebuild()
   }
@@ -101,8 +107,8 @@ console.log(this.props)
       <div
         data-tip>
        <XYPlot
-        width={1200}
-        height={600}>
+        width={this.state.width}
+        height={this.state.height}>
         <VerticalGridLines />
        <HorizontalGridLines />
        <XAxis title="HDI"/>

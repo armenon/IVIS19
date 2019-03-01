@@ -23,7 +23,7 @@ class App extends Component {
 	render() {
 		return (
 			<>
-				<Button style={{position:'absolute', zIndex:5, top:'40px', right:'40px'}} onClick={()=>this.setState({graph:!this.state.graph})}>Toggle Graph</Button>
+				<Button style={{position:'absolute', zIndex:700, top:'40px', right:'40px'}} onClick={()=>this.setState({graph:!this.state.graph})}>Toggle Graph</Button>
 				<SideBar />
 
 				{this.state.graph?<ScatterPlot/>:<WorldMap />}
