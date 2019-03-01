@@ -3,14 +3,6 @@ import React, { Component } from 'react';
 import './TimeBar.scss';
 
 class TimeBar extends Component {
-	state = {
-    isShown: true,
-	}
-	toggleMenu() {
-		this.setState({
-			isShown: !this.state.isShown,
-		});
-	}
 	render() {
 		return (
 			<div className="time-bar">

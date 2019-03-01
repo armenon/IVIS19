@@ -31,7 +31,6 @@
 	position: absolute;
 	right: 40px;
 	bottom: 120px;
-	box-shadow: $box-shadow;
 }
 
 .zoom-control {
@@ -44,6 +43,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	box-shadow: $box-shadow;
 	&.reset {
 		border-radius: $border-radius;
 	}

@@ -1,17 +1,46 @@
 import React, { Component } from 'react';
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
+import { countryNames } from '../../utils/countries.js'
 
 import './SideBar.scss';
 
 
 class SideBar extends Component {
-	state = {
-    isShown: true,
+	constructor() {
+		super();
+		this.state = {
+			isShown: true,
+			availableCountries: countryNames,
+		}
+	}
+	searchCountries(event) {
+		var searchString = event ? event.target.value : '';
+		if (searchString) {
+			this.setState({availableCountries: this.filterCountries(searchString)});
+		} else {
+			this.setState({ availableCountries: countryNames });
+		}
+	}
+	filterCountries(string) {
+		return countryNames.filter(country =>
+			country['name'].startsWith(string)
+		);
 	}
 	toggleMenu() {
 		this.setState({
 			isShown: !this.state.isShown,
 		});
+	}
+	renderCountries() {
+		return this.state.availableCountries.map(country => (
+			<div className="d-flex align-items-center checkbox">
+				<input value={country.id} key={country.id} type="checkbox" name="" id="" />
+				<div className="spacing-h x-small"></div>
+				<span>
+					{country.name}
+				</span>
+			</div>
+		));
 	}
 	render() {
 		return (
@@ -32,44 +61,10 @@ class SideBar extends Component {
 					<div className="country-search">
 						<span className="search-holder">
 							<i className="fa fa-search"></i>
-							<input type="text" placeholder="Search countries"/>
+							<input type="text" onChange={(e) => this.searchCountries(e)} placeholder="Search countries"/>
 						</span>
 						<div className="countries">
-							<div className="d-flex align-items-center checkbox active">
-								<input type="checkbox" name="" id="" />
-								<div className="spacing-h x-small"></div>
-								<span>
-									Country name active here
-								</span>
-							</div>
-							<div className="d-flex align-items-center checkbox">
-								<input type="checkbox" name="" id=""/>
-								<div className="spacing-h x-small"></div>
-								<span>
-									Country name here
-								</span>
-							</div>
-							<div className="d-flex align-items-center checkbox">
-								<input type="checkbox" name="" id="" />
-								<div className="spacing-h x-small"></div>
-								<span>
-									Country name here
-								</span>
-							</div>
-							<div className="d-flex align-items-center checkbox">
-								<input type="checkbox" name="" id="" />
-								<div className="spacing-h x-small"></div>
-								<span>
-									Country name here
-								</span>
-							</div>
-							<div className="d-flex align-items-center checkbox">
-								<input type="checkbox" name="" id="" />
-								<div className="spacing-h x-small"></div>
-								<span>
-									Country name here
-								</span>
-							</div>
+							{this.renderCountries()}
 						</div>
 						<div className="select-all">
 							<div className="d-flex align-items-center checkbox">
