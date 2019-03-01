@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import ReactTooltip from 'react-tooltip';
 import { Motion, spring } from "react-motion"
-import { scaleLinear } from 'd3-scale';
+import { scaleLinear,  scaleThreshold } from 'd3-scale';
 import { geoPath } from 'd3-geo';
 import { geoTimes } from 'd3-geo-projection';
 
@@ -31,9 +31,31 @@ import {
 	ZoomableGroup,
 	Geographies,
 	Geography,
+	Markers,
+	Marker,
 } from 'react-simple-maps';
 
 import './WorldMap.scss';
+
+const fillProperties = scaleLinear()
+			.domain([0,0.5,1])
+			.range(['red', 'yellow', 'green'])
+			.unknown("f2f2f2")
+const markerColor  = (range) => scaleThreshold()
+  .domain([0,100,200])
+  .range(range)
+
+
+
+const markerScale  = scaleLinear()
+  .domain([0,100,200])
+  .range([25,1,25])
+
+const textScale  = scaleLinear()
+.domain([0,100,200])
+.range([18,1,18])
+
+
 
 
 class WorldMap extends Component {
@@ -55,12 +77,7 @@ class WorldMap extends Component {
 	}
 
 	componentDidUpdate() {
-		ReactTooltip.rebuild();
-	}
-
-	async componentDidMount() {
-		const response = await fetch('world-50m-with-wvs.json');
-		this.setState({ mapData: await response.json() });
+		ReactTooltip.rebuild()
 	}
 
 	scale = (domain) => scaleLinear()
@@ -105,11 +122,12 @@ class WorldMap extends Component {
 
 
 	renderTooltip = (geography) => {
+
 		console.log('tooltip rendered')
 		const { name } = geography.properties
 
 		return renderToString(
-			<div className="tooltip">
+			<div>
 				<h3>{name}</h3>
 			</div>
 		)
@@ -124,12 +142,12 @@ class WorldMap extends Component {
 	getGeographyStyles = (geography) => {
 		const { iso_n3 } = geography.properties;
 		const { selectedCountry } = this.props;
-
+		//((selectedCountry && selectedCountry.iso_n3 === iso_n3)) ?
+	//		'#f50057' : '#cfd8dc',
 		return (
 			{
 				default: {
-					fill: ((selectedCountry && selectedCountry.iso_n3 === iso_n3)) ?
-						'#f50057' : '#cfd8dc',
+					fill: fillProperties(geography.properties.gapminder.hdi_human_development_index[this.props.year]),
 					stroke: "#607D8B",
 					strokeWidth: 0.75,
 					outline: "none"
@@ -154,7 +172,9 @@ class WorldMap extends Component {
 
 	render() {
 		const { height, width } = this.state;
-		const { center, zoom, increaseZoom, decreaseZoom, resetZoom, optimize } = this.props;
+		const { center, zoom, increaseZoom, decreaseZoom, resetZoom, optimize, data, fetching, error } = this.props;
+
+		if (fetching || error || !data) return null;
 
 		return (
 			<div className="world-map">
@@ -189,7 +209,7 @@ class WorldMap extends Component {
 						{({ motionZoom, x, y }) => (
 							<ComposableMap className="map" height={height} width={width} projection={this.projection} >
 								<ZoomableGroup onMoveStart={this.handleMoveStart} onMoveEnd={this.handleMoveEnd} center={[x, y]} zoom={motionZoom} style={{ cursor: 'grab' }} >
-									<Geographies geography={this.state.mapData} disableOptimization={!optimize}>
+									<Geographies geography={data} disableOptimization={!optimize}>
 										{(geographies, projection) =>
 											geographies.map((geography, i) => {
 												const { iso_a3, iso_n3 } = geography.properties;
@@ -199,8 +219,9 @@ class WorldMap extends Component {
 													<Geography
 														key={`${iso_n3}-${i}`}
 														cacheId={`${iso_n3}-${i}`}
-														data-tip={this.renderTooltip(geography)}
 														data-html={true}
+														data-tip={this.renderTooltip(geography)}
+
 														geography={geography}
 														projection={projection}
 														onClick={this.handleClick}
@@ -211,6 +232,40 @@ class WorldMap extends Component {
 											})
 										}
 									</Geographies>
+									<Markers>
+										{ data.filter(d => d.properties.gapminder.external_debt_total_us_not_inflation_adjusted[this.props.year]).map((country,i)=> {
+
+											const debtToGDP = Math.round(country.properties.gapminder.debt_to_foreigners_by_public_and_private_percent_of_gni[this.props.year])
+											return(
+												<Marker key={i} marker={{coordinates:country.geometry.coordinates[0][0]}}>
+												<circle
+													cx={0}
+													cy={0}
+													r={markerScale(debtToGDP)}
+													fill={markerColor(['gray','white','black'])(debtToGDP)}
+													stroke="#607D8B"
+													strokeWidth="2"
+													onClick={()=>console.log(country)}
+												/>
+												<text
+												textAnchor="middle"
+												 y={'0.4em'}
+												 x={2}
+												style={{
+													fontSize:textScale(debtToGDP),
+		                      fontFamily: "Roboto, sans-serif",
+		                      fill: markerColor(['gray','black','white'])(debtToGDP),
+		                    }}>
+												{debtToGDP<100?"":"+"}{-100+debtToGDP}%
+												</text>
+
+											</Marker>
+										)
+										})
+
+										}
+								</Markers>
+
 								</ZoomableGroup>
 							</ComposableMap>
 						)}
@@ -227,7 +282,11 @@ const mapStateToProps = state => ({
 	country: state.map.currentCountry,
 	selectedCountry: state.map.selectedCountry,
 	zoom: state.map.zoom,
-	center: state.map.center
+	center: state.map.center,
+	error: state.general.error,
+	fetching: state.general.fetching,
+	data: state.general.data,
+	year: state.filters.year
 });
 
 const mapDispatchToProps = dispatch => {

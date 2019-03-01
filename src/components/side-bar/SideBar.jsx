@@ -1,17 +1,50 @@
 import React, { Component } from 'react';
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import FilterOption from '../filter-options/FilterOptions'
+import {connect} from 'react-redux'
+import { countryNames } from '../../utils/countries.js'
+import TimeBar from '../time-bar/TimeBar';
+import VariablesLegend from '../variables-legend/VariablesLegend';
+import { fetchCountries, setYear, enableOptimization, disableOptimization } from '../../store/'
 import './SideBar.scss';
 
 
 class SideBar extends Component {
-	state = {
-    isShown: true,
+	constructor() {
+		super();
+		this.state = {
+			isShown: true,
+			availableCountries: countryNames,
+		}
+	}
+	searchCountries(event) {
+		var searchString = event ? event.target.value : '';
+		if (searchString) {
+			this.setState({availableCountries: this.filterCountries(searchString)});
+		} else {
+			this.setState({ availableCountries: countryNames });
+		}
+	}
+	filterCountries(string) {
+		return countryNames.filter(country =>
+			country['name'].startsWith(string)
+		);
 	}
 	toggleMenu() {
 		this.setState({
 			isShown: !this.state.isShown,
 		});
+	}
+	renderCountries() {
+		return this.state.availableCountries.map(country => (
+			<div className="d-flex align-items-center checkbox">
+				<input value={country.id} key={country.id} type="checkbox" name="" id="" />
+				<div className="spacing-h x-small"></div>
+				<span>
+					{country.name}
+				</span>
+			</div>
+		));
 	}
 	render() {
 		return (
@@ -32,44 +65,10 @@ class SideBar extends Component {
 					<div className="country-search">
 						<span className="search-holder">
 							<i className="fa fa-search"></i>
-							<input type="text" placeholder="Search countries"/>
+							<input type="text" onChange={(e) => this.searchCountries(e)} placeholder="Search countries"/>
 						</span>
 						<div className="countries">
-							<div className="d-flex align-items-center checkbox active">
-								<input type="checkbox" name="" id="" />
-								<div className="spacing-h x-small"></div>
-								<span>
-									Country name active here
-								</span>
-							</div>
-							<div className="d-flex align-items-center checkbox">
-								<input type="checkbox" name="" id=""/>
-								<div className="spacing-h x-small"></div>
-								<span>
-									Country name here
-								</span>
-							</div>
-							<div className="d-flex align-items-center checkbox">
-								<input type="checkbox" name="" id="" />
-								<div className="spacing-h x-small"></div>
-								<span>
-									Country name here
-								</span>
-							</div>
-							<div className="d-flex align-items-center checkbox">
-								<input type="checkbox" name="" id="" />
-								<div className="spacing-h x-small"></div>
-								<span>
-									Country name here
-								</span>
-							</div>
-							<div className="d-flex align-items-center checkbox">
-								<input type="checkbox" name="" id="" />
-								<div className="spacing-h x-small"></div>
-								<span>
-									Country name here
-								</span>
-							</div>
+							{this.renderCountries()}
 						</div>
 						<div className="select-all">
 							<div className="d-flex align-items-center checkbox">
@@ -88,10 +87,28 @@ class SideBar extends Component {
 						<FilterOption filterName="HPI" filterLeftValue="0" filterRightValue="1" minFilterValue={0} maxFilterValue = {1} defaultValueMin = {0.4} defaultValueMax = {0.7} step={0.01}></FilterOption>
 					</div>
 				</div>
+				<TimeBar onYearChange={(e)=>this.props.setYear(e.target.value)} year={this.props.year} isFull={!this.state.isShown} />
+				<VariablesLegend isFull={!this.state.isShown} />
 			</div>
 		);
 	}
 }
 
+const mapStateToProps = state => ({
 
-export default SideBar;
+	year: state.filters.year
+});
+
+
+ const mapDispatchToProps = dispatch => {
+	return {
+
+		setYear: async (year) => {
+			dispatch(disableOptimization(year))
+			await dispatch(setYear(year))
+			dispatch(enableOptimization(year))
+		}
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideBar);

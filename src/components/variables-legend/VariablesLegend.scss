@@ -1,1 +1,32 @@
 @import '../../globals';
+
+.variables-container {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 40px;
+	z-index: 5;
+}
+.variables {
+	min-width: 320px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: $color-white;
+	padding: 20px 40px;
+	border-radius: $border-radius;
+	position: relative;
+	margin-left: 380px;
+	transition: 0.3s all cubic-bezier(1, 0, 0, 1);
+	&.full {
+		margin-left: 0px;
+	}
+	.large {
+		font-size: 26px;
+		font-weight: bold;
+	}
+}

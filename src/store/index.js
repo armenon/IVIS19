@@ -4,16 +4,12 @@ import thunk from 'redux-thunk';
 
 import { general } from './general/reducer';
 import { map } from './map/reducer';
-import { wave } from './wave/reducer';
-import { stats } from './stats/reducer';
 import { filters } from './filters/reducer';
 
 const reducers = combineReducers({
 	general,
 	filters,
-	map,
-	stats,
-	wave,
+	map
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -26,6 +22,5 @@ export const store = createStore(
 
 // export actions
 export * from './map/actions';
-export * from './stats/actions';
-export * from './wave/actions';
 export * from './filters/actions';
+export * from './general/actions';
