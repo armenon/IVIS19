@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 
 import ReactTooltip from 'react-tooltip';
 import { Motion, spring } from "react-motion"
-import { scaleLinear } from 'd3-scale';
+import { scaleLinear, scaleThreshold } from "d3-scale"
 import { geoPath } from 'd3-geo';
 import { geoTimes } from 'd3-geo-projection';
+import { get } from 'axios'
+import * as topojson from 'topojson-client'
+
 
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
@@ -32,11 +35,33 @@ import {
 	ZoomableGroup,
 	Geographies,
 	Geography,
+	Markers,
+	Marker,
 } from 'react-simple-maps';
 
 import { getStats } from '../../utils/getStats';
 
+import Bubbles from '../bubbles/Bubbles';
+
 import './WorldMap.scss';
+
+
+
+const markerColor  = (range) => scaleThreshold()
+    .domain([0,100,200])
+    .range(range)
+
+
+
+const markerScale  = scaleLinear()
+    .domain([0,100,200])
+    .range([25,0,25])
+
+const textScale  = scaleLinear()
+  .domain([0,100,200])
+  .range([18,1,18])
+
+
 
 
 class WorldMap extends Component {
@@ -45,7 +70,8 @@ class WorldMap extends Component {
 	state = {
 		height: null,
 		width: null,
-		virtualCenter: null
+		virtualCenter: null,
+		geographies:null
 	}
 
 	componentWillMount() {
@@ -53,6 +79,25 @@ class WorldMap extends Component {
 			height: window.innerHeight,
 			width: window.innerWidth,
 			virtualCenter: this.props.center
+		})
+
+		//TODO move this to root or dispatch to store for filtering. 
+		get("/world-50m-with-wvs.json")
+		.then(res => {
+			if (res.status !== 200) return
+			const world = res.data
+
+			// Transform your paths with topojson however you want...
+
+			const countries = topojson.feature(world, world.objects[Object.keys(world.objects)[0]]).features
+			console.log(world)
+
+
+
+
+			this.setState({
+				geographies: countries
+			})
 		})
 	}
 
@@ -152,6 +197,9 @@ class WorldMap extends Component {
 	}
 
 	render() {
+		if (this.state.geographies === null){
+			return <div/>
+		}
 		const { height, width } = this.state;
 		const { center, zoom, increaseZoom, decreaseZoom, resetZoom, optimize, selectedCountry } = this.props;
 
@@ -191,7 +239,7 @@ class WorldMap extends Component {
 						{({ motionZoom, x, y }) => (
 							<ComposableMap className="map" height={height} width={width} projection={this.projection} >
 								<ZoomableGroup onMoveStart={this.handleMoveStart} onMoveEnd={this.handleMoveEnd} center={[x, y]} zoom={motionZoom} style={{ cursor: 'grab' }} >
-									<Geographies geography="world-50m-with-wvs.json" disableOptimization={!optimize}>
+									<Geographies geography={this.state.geographies} disableOptimization={!optimize}>
 										{(geographies, projection) =>
 											geographies.map((geography, i) => {
 												const value = this.reduceValue(geography);
@@ -237,6 +285,41 @@ class WorldMap extends Component {
 											})
 										}
 									</Geographies>
+
+									<Markers>
+										{this.state.geographies.map((country,i)=> {
+											const debtToGDP = Math.round(Math.random()*200)
+											return(
+												<Marker key={i} marker={{coordinates:country.geometry.coordinates[0][0]}}>
+												<circle
+													cx={0}
+													cy={0}
+													r={markerScale(debtToGDP)}
+													fill={markerColor(['gray','white','black'])(debtToGDP)}
+													stroke="#607D8B"
+													strokeWidth="2"
+													onClick={()=>console.log(country)}
+												/>
+												<text
+												textAnchor="middle"
+												 y={'0.4em'}
+												 x={2}
+												style={{
+													fontSize:textScale(debtToGDP),
+		                      fontFamily: "Roboto, sans-serif",
+		                      fill: markerColor(['gray','black','white'])(debtToGDP),
+		                    }}>
+												{debtToGDP<100?"":"+"}{-100+debtToGDP}%
+												</text>
+
+											</Marker>
+										)
+										})
+
+										}
+								</Markers>
+
+
 								</ZoomableGroup>
 							</ComposableMap>
 						)}
