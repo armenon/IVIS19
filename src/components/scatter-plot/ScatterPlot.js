@@ -39,7 +39,7 @@ const plotScale=scaleLinear()
 
 const plotColor=scaleThreshold()
       .domain([100,200])
-      .range(["white", 'black'])
+      .range(["#ffffff", '#2a2a2a'])
       .unknown('gray')
 
 class ScatterPlot extends Component {
@@ -50,11 +50,11 @@ class ScatterPlot extends Component {
     this.handleHover = this.handleHover.bind(this)
     this.renderTooltip = this.renderTooltip.bind(this)
     this.state = {
-
+      height:null,
+      width:null,
       country: null
     }
   }
-
   componentDidUpdate(){
     ReactTooltip.rebuild()
   }

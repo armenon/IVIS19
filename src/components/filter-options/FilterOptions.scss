@@ -1,0 +1,28 @@
+@import '../../globals';
+
+
+.filter-container {
+    margin: 35px auto;
+}
+
+.filter-title {
+    font-size: 21px;
+    color: $color-white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.filter-left-scale {
+    font-size: 15px;
+    color: $color-white;
+    display: inline-block;
+}
+
+.filter-right-scale {
+    font-size: 15px;
+    color: $color-white;
+    float: right;
+}
+
+.rc-tooltip { z-index: 1500; }
+.rc-slider-tooltip { z-index: 1500; }
