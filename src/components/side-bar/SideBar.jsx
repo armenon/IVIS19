@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
+import {connect} from 'react-redux'
 import { countryNames } from '../../utils/countries.js'
 import TimeBar from '../time-bar/TimeBar';
 import VariablesLegend from '../variables-legend/VariablesLegend';
-
+import { fetchCountries, setYear, enableOptimization, disableOptimization } from '../../store/'
 import './SideBar.scss';
 
 
@@ -84,12 +85,28 @@ class SideBar extends Component {
 						Filters here...
 					</div>
 				</div>
-				<TimeBar isFull={!this.state.isShown} />
+				<TimeBar onYearChange={(e)=>this.props.setYear(e.target.value)} year={this.props.year} isFull={!this.state.isShown} />
 				<VariablesLegend isFull={!this.state.isShown} />
 			</div>
 		);
 	}
 }
 
+const mapStateToProps = state => ({
 
-export default SideBar;
+	year: state.filters.year
+});
+
+
+ const mapDispatchToProps = dispatch => {
+	return {
+
+		setYear: async (year) => {
+			dispatch(disableOptimization(year))
+			await dispatch(setYear(year))
+			dispatch(enableOptimization(year))
+		}
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideBar);

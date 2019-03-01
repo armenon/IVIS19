@@ -3,21 +3,8 @@ import React, { Component } from 'react';
 import './TimeBar.scss';
 
 class TimeBar extends Component {
-<<<<<<< Updated upstream
-=======
-	constructor(props){
-		super(props)
 
-	}
-	state = {
-    isShown: true,
-	}
-	toggleMenu() {
-		this.setState({
-			isShown: !this.state.isShown,
-		});
-	}
->>>>>>> Stashed changes
+
 	render() {
 		return (
 			<div className={this.props.isFull ? 'time-bar full' : 'time-bar'}>
