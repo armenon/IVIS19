@@ -68,7 +68,8 @@ class WorldMap extends Component {
 		.range(["#f44336", "#ffeb3b", "#4caf50"])
 
 	handleClick = async (geography, evt) => {
-		// if (this.ignoreClick) return;
+		console.log('should ignore?', this.ignoreClick)
+		if (this.ignoreClick) return;
 
 		const { iso_n3, name, gapminder } = geography.properties;
 
