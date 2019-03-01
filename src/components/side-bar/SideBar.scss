@@ -2,7 +2,7 @@
 
 #filterButton {
 	position: absolute;
-	z-index: 5;
+	z-index: 6;
 	top: 40px;
 	left: 40px;
 }
@@ -17,12 +17,6 @@
 	padding: 40px;
 	&.hidden {
 		transform: translateX(-100%);
-	}
-	.label {
-		font-size: 16px;
-		color: $color-light-gray;
-		font-weight: bold;
-		text-transform: uppercase;
 	}
 	.logo {
 		i {
