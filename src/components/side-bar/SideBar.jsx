@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
+import FilterOption from '../filter-options/FilterOptions'
 import {connect} from 'react-redux'
 import { countryNames } from '../../utils/countries.js'
 import TimeBar from '../time-bar/TimeBar';
@@ -82,7 +83,8 @@ class SideBar extends Component {
 					<div className="spacing large"></div>
 					<p className="label">Filters</p>
 					<div className="filters">
-						Filters here...
+						<FilterOption filterName="Debt" filterLeftValue="USD 0" filterRightValue="USD 20B" minFilterValue={0} maxFilterValue = {20} defaultValueMin = {4} defaultValueMax = {7} step={1}></FilterOption>
+						<FilterOption filterName="HPI" filterLeftValue="0" filterRightValue="1" minFilterValue={0} maxFilterValue = {1} defaultValueMin = {0.4} defaultValueMax = {0.7} step={0.01}></FilterOption>
 					</div>
 				</div>
 				<TimeBar onYearChange={(e)=>this.props.setYear(e.target.value)} year={this.props.year} isFull={!this.state.isShown} />
