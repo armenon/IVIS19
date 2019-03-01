@@ -14,7 +14,6 @@ class App extends Component {
 		return (
 			<>
 				<SideBar />
-				<WaveToggle />
 				<WorldMap />
 			</>
 		);
