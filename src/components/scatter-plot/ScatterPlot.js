@@ -101,8 +101,10 @@ console.log(this.props)
       <div
         data-tip>
        <XYPlot
-        width={1200}
-        height={600}>
+					width={window.innerWidth - 400}
+					height={window.innerHeight - 80}
+					style={{marginLeft: '400px'}}
+				>
         <VerticalGridLines />
        <HorizontalGridLines />
        <XAxis title="HDI"/>

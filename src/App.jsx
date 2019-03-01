@@ -4,20 +4,15 @@ import './App.scss';
 
 import WorldMap from './components/world-map/WorldMap';
 import SideBar from './components/side-bar/SideBar';
-import TimeBar from './components/time-bar/TimeBar';
 import ScatterPlot from './components/scatter-plot/ScatterPlot';
-import VariablesLegend from './components/variables-legend/VariablesLegend';
-import CountryStats from './components/country-stats/CountryStats';
-import Slider from 'rc-slider'
 import 'rc-slider/assets/index.css';
-import { Button } from '@material-ui/core';
-import { CloudDownload } from '@material-ui/icons';
+import { Button } from 'react-bootstrap';
 
-import { fetchCountries, setYear, enableOptimization, disableOptimization } from './store/'
+import { fetchCountries } from './store/'
 
 class App extends Component {
 	state ={
-		graph:false
+		graph: false
 	}
 	componentDidMount() {
 		this.props.fetchCountries();
@@ -25,9 +20,8 @@ class App extends Component {
 	render() {
 		return (
 			<>
-				<Button style={{position:'absolute', zIndex:5, top:'40px', right:'40px'}} onClick={()=>this.setState({graph:!this.state.graph})}>Toggle Graph</Button>
+				<Button onClick={() => this.setState({ graph: !this.state.graph })} id="filterButton" bsPrefix="btn btn-primary box-shadow graph">{!this.state.graph ? 'Show graph' : 'Show map'}</Button>
 				<SideBar />
-
 				{this.state.graph?<ScatterPlot/>:<WorldMap />}
 
 			</>
@@ -37,7 +31,6 @@ class App extends Component {
 
 const mapStateToProps = state => ({
 	title: state.general.title,
-
 });
 
 
