@@ -17,21 +17,18 @@ class VariablesLegend extends Component {
 			<div className="variables-container">
 				<div className="variables box-shadow">
 					<span className="large">
-					<span className="label d-block">SIZE and %</span>
 					Debt
 					</span>
 					<div className="spacing-h small"></div>
 					<span className="label">vs</span>
 					<div className="spacing-h small"></div>
 					<span className="large">
-					<span className="label d-block">MAP COLOR</span>
-					HDI
+						<span className="d-block">HDI</span>
 					</span>
 					<div className="spacing-h small"></div>
 					<span className="label">&</span>
 					<div className="spacing-h small"></div>
 					<span className="large">
-					<span className="label d-block">SIZE and %</span>
 					GDP
 					</span>
 				</div>

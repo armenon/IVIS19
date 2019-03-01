@@ -14,10 +14,11 @@
 .variables {
 	display: flex;
 	align-items: center;
-
+	justify-content: space-between;
 	background-color: $color-white;
-	padding: 15px 30px;
+	padding: 20px 40px;
 	border-radius: $border-radius;
+	position: relative;
 	.large {
 		font-size: 26px;
 		font-weight: bold;
