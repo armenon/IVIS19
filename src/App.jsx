@@ -8,8 +8,6 @@ import TimeBar from './components/time-bar/TimeBar';
 import ScatterPlot from './components/scatter-plot/ScatterPlot';
 import VariablesLegend from './components/variables-legend/VariablesLegend';
 import CountryStats from './components/country-stats/CountryStats';
-import Slider from 'rc-slider'
-import 'rc-slider/assets/index.css';
 import { Button } from '@material-ui/core';
 import { CloudDownload } from '@material-ui/icons';
 
