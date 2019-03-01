@@ -14,12 +14,18 @@ import './SideBar.scss';
 
 class SideBar extends Component {
 	state = {
-    labelWidth: 0
+    isShown: true,
 	}
-
+	toggleMenu() {
+		this.setState({
+			isShown: false,
+		});
+	}
 	render() {
 		return (
-			<div className="side-bar">
+			<div className={this.state.isShown ? 'side-bar' : 'side-bar hidden'}>
+				<a onClick={() => this.toggleMenu()}><i className="fas fa-arrow-left"></i> Hide filters</a>
+				<div className="spacing"></div>
 				<div className="logo d-flex">
 					<i className="fas fa-dollar-sign"></i>
 					<div className="spacing-h small"></div>

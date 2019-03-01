@@ -1,3 +1,5 @@
+@import '../../globals';
+
 .world-map {
 	align-content: center;
 	display: flex;
@@ -27,13 +29,33 @@
 
 .zoom-controls {
 	position: absolute;
-	right: 0;
-	bottom: 0;
-	margin: 5px;
+	right: 40px;
+	bottom: 40px;
 }
 
 .zoom-control {
-	margin: 5px;
+	font-size: 22px;
+	color: $color-white;
+	background-color: $color-black;
+	display: block;
+	height: 50px;
+	width: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	&.reset {
+		border-radius: $border-radius;
+	}
+	&.top {
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		border-top-left-radius: $border-radius;
+		border-top-right-radius: $border-radius;
+	}
+	&.bottom {
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		border-bottom-left-radius: $border-radius;
+		border-bottom-right-radius: $border-radius;
+	}
 }
 
 .tooltip {

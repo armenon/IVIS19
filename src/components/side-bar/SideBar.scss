@@ -1,6 +1,10 @@
 @import '../../globals';
 
 .side-bar {
+	transition: 0.3s all cubic-bezier(1, 0, 0, 1);
+	&.hidden {
+		transform: translateX(-100%);
+	}
 	position: absolute;
 	z-index: 10;
 	height: 100vh;
@@ -21,5 +25,11 @@
 			margin: 0px;
 			color: $color-light-gray;
 		}
+	}
+	a {
+		font-size: 18px;
+		color: $color-light-gray;
+		font-weight: bold;
+		text-decoration: none;
 	}
 }

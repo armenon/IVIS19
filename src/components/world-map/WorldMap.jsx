@@ -160,20 +160,17 @@ class WorldMap extends Component {
 				<div className="map-container">
 					<div className="legend"></div>
 					<div className="zoom-controls">
-						<div className="zoom-control">
-							<Fab className="zoom-control" disabled={this.disableReset()} size="small" color="primary" onClick={resetZoom} >
-								<MyLocation />
-							</Fab>
+						<div className="zoom-control reset" disabled={this.disableReset()} size="small" color="primary" onClick={resetZoom} >
+							<i className="fa fa-stop"></i>
 						</div>
-						<div className="zoom-control">
-							<Fab size="small" color="secondary" disabled={zoom >= 48} onClick={increaseZoom}>
-								<AddIcon />
-							</Fab>
+						<div className="spacing small"></div>
+						<div className="zoom-control top">
+							<div size="small" color="secondary" disabled={zoom >= 48} onClick={increaseZoom}>
+								<i className="fa fa-plus"></i>
+							</div>
 						</div>
-						<div className="zoom-control">
-							<Fab className="zoom-control" size="small" color="default" disabled={zoom <= 1.5} onClick={decreaseZoom} >
-								<RemoveIcon />
-							</Fab>
+						<div className="zoom-control bottom" size="small" color="default" disabled={zoom <= 1.5} onClick={decreaseZoom} >
+							<i className="fa fa-minus"></i>
 						</div>
 					</div>
 					<Motion
