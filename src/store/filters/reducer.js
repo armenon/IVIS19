@@ -13,7 +13,8 @@ const filtersState = {
 	hdi: {
 		min: null,
 		max: null
-	}
+	},
+	year: 2010
 }
 
 export const filters = (state = filtersState, action) => {
@@ -40,6 +41,12 @@ export const filters = (state = filtersState, action) => {
 			return {
 				...state,
 				selectedCountries: [...action.countries]
+			}
+		}
+		case Actions.SET_YEAR: {
+			return {
+				...state,
+				year: action.year
 			}
 		}
 		default:

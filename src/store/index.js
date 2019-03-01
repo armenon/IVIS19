@@ -29,3 +29,4 @@ export * from './map/actions';
 export * from './stats/actions';
 export * from './wave/actions';
 export * from './filters/actions';
+export * from './general/actions';
