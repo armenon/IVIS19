@@ -81,6 +81,11 @@ class SideBar extends Component {
 							</div>
 						</div>
 					</div>
+					<div className="spacing large"></div>
+					<p className="label">Filters</p>
+					<div className="filters">
+						Filters here...
+					</div>
 				</div>
 			</div>
 		);
