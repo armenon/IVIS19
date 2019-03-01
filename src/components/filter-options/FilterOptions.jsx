@@ -24,8 +24,22 @@ var marks = {
 
 class FilterOption extends Component {
     
+    constructor(props){
+        super(props)
+
+        marks = { // I don't give a shit anymore
+            0: {
+                style: {
+                    fontSize: 10,
+                    color: "#A9A9A9"
+                },
+                label: <strong>MIN</strong>
+            }
+          };
+      }
+
     componentWillMount() {
-        var tempValue = this.props.maxFilterValue;
+        var tempValue = this.props.maxFilterValue; // So we can dinamically use the max filter value
         marks[tempValue] =  {
             style: {
               fontSize: 10,
