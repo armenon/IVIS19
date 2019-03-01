@@ -12,7 +12,11 @@
 	position: absolute;
 	right: 0;
 	bottom: 0;
+	transition: 0.3s all cubic-bezier(1, 0, 0, 1);
 	z-index: 11;
+	&.full {
+		width: 100%;
+	}
 	.input-holder {
 		width: 100%;
 		position: relative;

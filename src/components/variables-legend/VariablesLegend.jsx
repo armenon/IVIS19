@@ -15,7 +15,7 @@ class VariablesLegend extends Component {
 	render() {
 		return (
 			<div className="variables-container">
-				<div className="variables box-shadow">
+				<div className={this.props.isFull ? 'variables box-shadow full' : 'variables box-shadow'}>
 					<span className="large">
 					Debt
 					</span>

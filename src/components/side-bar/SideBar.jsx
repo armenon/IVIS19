@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import { countryNames } from '../../utils/countries.js'
+import TimeBar from '../time-bar/TimeBar';
+import VariablesLegend from '../variables-legend/VariablesLegend';
 
 import './SideBar.scss';
 
@@ -82,6 +84,8 @@ class SideBar extends Component {
 						Filters here...
 					</div>
 				</div>
+				<TimeBar isFull={!this.state.isShown} />
+				<VariablesLegend isFull={!this.state.isShown} />
 			</div>
 		);
 	}

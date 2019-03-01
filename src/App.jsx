@@ -6,7 +6,6 @@ import WorldMap from './components/world-map/WorldMap';
 import WaveToggle from './components/wave-toggle/WaveToggle';
 import SideBar from './components/side-bar/SideBar';
 import VariablesLegend from './components/variables-legend/VariablesLegend';
-import TimeBar from './components/time-bar/TimeBar';
 import CountryStats from './components/country-stats/CountryStats';
 import { Button } from '@material-ui/core';
 import { CloudDownload } from '@material-ui/icons';
@@ -16,9 +15,7 @@ class App extends Component {
 		return (
 			<>
 				<SideBar />
-				<VariablesLegend />
 				<WorldMap />
-				<TimeBar />
 			</>
 		);
 	}

@@ -5,7 +5,7 @@ import './TimeBar.scss';
 class TimeBar extends Component {
 	render() {
 		return (
-			<div className="time-bar">
+			<div className={this.props.isFull ? 'time-bar full' : 'time-bar'}>
 				<span className="label large color-dark">1990</span>
 				<div className="spacing-h"></div>
 				<div className="input-holder">
