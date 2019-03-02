@@ -4,30 +4,23 @@ import './App.scss';
 
 import WorldMap from './components/world-map/WorldMap';
 import SideBar from './components/side-bar/SideBar';
-import TimeBar from './components/time-bar/TimeBar';
 import ScatterPlot from './components/scatter-plot/ScatterPlot';
-import VariablesLegend from './components/variables-legend/VariablesLegend';
-import CountryStats from './components/country-stats/CountryStats';
-import { Button } from '@material-ui/core';
-import { CloudDownload } from '@material-ui/icons';
+import 'rc-slider/assets/index.css';
+import { Button } from 'react-bootstrap';
 
-import { fetchCountries, setYear, enableOptimization, disableOptimization } from './store/'
+import { fetchCountries, toggleVisualization } from './store/'
 
 class App extends Component {
-	state ={
-		graph:false
-	}
 	componentDidMount() {
 		this.props.fetchCountries();
 	}
+
 	render() {
 		return (
 			<>
-				<Button style={{position:'absolute', zIndex:5, top:'40px', right:'40px'}} onClick={()=>this.setState({graph:!this.state.graph})}>Toggle Graph</Button>
-				<SideBar />
-
-				{this.state.graph?<ScatterPlot/>:<WorldMap />}
-
+				<Button onClick={this.props.toggleVisualization} id="filterButton" bsPrefix="btn btn-primary box-shadow graph">{!this.props.graph ? (<span><i class="fas fa-chart-area"></i> Show graph</span>) : (<span><i class="fas fa-globe-americas"></i> Show map</span>)}</Button>
+				<SideBar isGraphShown={this.props.graph} />
+				{this.props.graph ? <ScatterPlot /> : <WorldMap />}
 			</>
 		);
 	}
@@ -35,14 +28,14 @@ class App extends Component {
 
 const mapStateToProps = state => ({
 	title: state.general.title,
-
+	graph: state.general.showScatter
 });
 
 
- const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
 	return {
 		fetchCountries: () => dispatch(fetchCountries()),
-
+		toggleVisualization: () => dispatch(toggleVisualization())
 	}
 }
 

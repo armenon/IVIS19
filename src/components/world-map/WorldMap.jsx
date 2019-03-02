@@ -53,7 +53,9 @@ const markerScale  = scaleLinear()
 
 const textScale  = scaleLinear()
 .domain([0,100,200])
-.range([18,1,18])
+.range([15,1,15])
+
+
 
 
 
@@ -83,6 +85,15 @@ class WorldMap extends Component {
 	scale = (domain) => scaleLinear()
 		.domain(domain)
 		.range(["#f44336", "#ffeb3b", "#4caf50"])
+
+	getCenter(geography){
+		const path = geoPath().projection(this.projection())
+		const centroid = this.projection().invert(path.centroid(geography))
+
+		return centroid;
+
+	}
+
 
 	handleClick = async (geography, evt) => {
 		console.log('should ignore?', this.ignoreClick)
@@ -181,16 +192,14 @@ class WorldMap extends Component {
 				<div className="map-container">
 					<div className="legend"></div>
 					<div className="zoom-controls">
-						<a className="zoom-control reset" disabled={this.disableReset()} size="small" color="primary" onClick={resetZoom} >
+						<a className="zoom-control reset" disabled={this.disableReset()} onClick={resetZoom} >
 							<i className="fa fa-stop"></i>
 						</a>
 						<div className="spacing small"></div>
-						<a className="zoom-control top">
-							<div size="small" color="secondary" disabled={zoom >= 48} onClick={increaseZoom}>
+						<a className="zoom-control top" disabled={zoom >= 48} onClick={increaseZoom}>
 								<i className="fa fa-plus"></i>
-							</div>
 						</a>
-						<a className="zoom-control bottom" size="small" color="default" disabled={zoom <= 1.5} onClick={decreaseZoom} >
+						<a className="zoom-control bottom" disabled={zoom <= 1.5} onClick={decreaseZoom}>
 							<i className="fa fa-minus"></i>
 						</a>
 					</div>
@@ -237,12 +246,12 @@ class WorldMap extends Component {
 
 											const debtToGDP = Math.round(country.properties.gapminder.debt_to_foreigners_by_public_and_private_percent_of_gni[this.props.year])
 											return(
-												<Marker key={i} marker={{coordinates:country.geometry.coordinates[0][0]}}>
+												<Marker key={i} marker={{coordinates:this.getCenter(country.geometry)}}>
 												<circle
 													cx={0}
 													cy={0}
 													r={markerScale(debtToGDP)}
-													fill={markerColor(['gray','white','black'])(debtToGDP)}
+													fill={markerColor(['gray',"#ffffff", '#2a2a2a'])(debtToGDP)}
 													stroke="#607D8B"
 													strokeWidth="2"
 													onClick={()=>console.log(country)}
@@ -254,7 +263,7 @@ class WorldMap extends Component {
 												style={{
 													fontSize:textScale(debtToGDP),
 		                      fontFamily: "Roboto, sans-serif",
-		                      fill: markerColor(['gray','black','white'])(debtToGDP),
+		                      fill: markerColor(['gray', '#2a2a2a', "#ffffff"])(debtToGDP)
 		                    }}>
 												{debtToGDP<100?"":"+"}{-100+debtToGDP}%
 												</text>

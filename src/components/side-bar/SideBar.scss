@@ -59,6 +59,9 @@
 		input {
 			margin-bottom: 4px;
 			opacity: 0.2;
+			&:checked {
+				opacity: 1;
+			}
 		}
 		&.active {
 			color: #fff;
