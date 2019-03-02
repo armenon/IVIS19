@@ -22,6 +22,8 @@ var marks = {
     }
   };
 
+
+
 class FilterOption extends Component {
     
     constructor(props){
@@ -59,7 +61,9 @@ class FilterOption extends Component {
                     <h4 className = "filter-right-scale">{this.props.filterRightValue}</h4>
                 </div>
                 <div className = "slider-body">
-                    <Range marks={marks} step={this.props.step} min={this.props.minFilterValue} max={this.props.maxFilterValue} defaultValue={[this.props.defaultValueMin, this.props.defaultValueMax]} tipFormatter={value => `${value}`}/>
+                    <Range marks={marks} trackStyle={[{ backgroundColor: "#A9A9A9" }]} railStyle={{ backgroundColor: "#343434" }} 
+                        step={this.props.step} min={this.props.minFilterValue} max={this.props.maxFilterValue} 
+                        defaultValue={[this.props.defaultValueMin, this.props.defaultValueMax]} tipFormatter={value => `${value}`}/>
                 </div>
             </div>
         </div>
