@@ -49,7 +49,7 @@ export const filters = (state = filtersState, action) => {
 		case Actions.SEARCH_COUNTRIES: {
 			return {
 				...state,
-				countriesSearchResults: action.str ? filterCountries(action.str, [...state.countries]) : [...countryNames]
+				countriesSearchResults: action.str ? filterCountries(action.str, [...countryNames]) : [...countryNames]
 			}
 		}
 		case Actions.SELECT_COUNTRY: {
