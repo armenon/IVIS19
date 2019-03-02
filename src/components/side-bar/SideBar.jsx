@@ -49,11 +49,9 @@ class SideBar extends Component {
 	render() {
 		return (
 			<div>
-				<Button onClick={() => this.toggleMenu()} id="filterButton" bsPrefix="btn btn-primary box-shadow">Filters <i className="fa fa-filter"></i></Button>
-				<div className={this.state.isShown || this.props.isGraphShown ? 'side-bar' : 'side-bar hidden'}>
-					{!this.props.isGraphShown && (
-						<a onClick={() => this.toggleMenu()}><i className="fas fa-arrow-left"></i> Hide filters</a>
-					)}
+				{!this.props.isGraphShown && (<Button onClick={() => this.toggleMenu()} id="filterButton" bsPrefix="btn btn-primary box-shadow">Filters <i className="fa fa-filter"></i></Button>)}
+				<div className={this.state.isShown && !this.props.isGraphShown ? 'side-bar' : 'side-bar hidden'}>
+					<a onClick={() => this.toggleMenu()}><i className="fas fa-arrow-left"></i> Hide filters</a>
 					<div className="spacing"></div>
 					<div className="logo d-flex">
 						<i className="fas fa-dollar-sign"></i>
@@ -89,8 +87,8 @@ class SideBar extends Component {
 						<FilterOption filterName="HPI" filterLeftValue="0" filterRightValue="1" minFilterValue={0} maxFilterValue = {1} defaultValueMin = {0.4} defaultValueMax = {0.7} step={0.01}></FilterOption>
 					</div>
 				</div>
-				<TimeBar onYearChange={(e)=>this.props.setYear(e.target.value)} year={this.props.year} isFull={!this.state.isShown} />
-				<VariablesLegend isFull={!this.state.isShown} />
+				<TimeBar onYearChange={(e)=>this.props.setYear(e.target.value)} year={this.props.year} isFull={!this.state.isShown || this.props.isGraphShown} />
+				<VariablesLegend isFull={!this.state.isShown || this.props.isGraphShown} />
 			</div>
 		);
 	}

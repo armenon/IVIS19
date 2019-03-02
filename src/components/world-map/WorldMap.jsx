@@ -39,7 +39,7 @@ import './WorldMap.scss';
 
 const fillProperties = scaleLinear()
 			.domain([0,0.5,1])
-			.range(['red', 'yellow', 'green'])
+			.range(['#dc3545', '#ffc107', '#28a745'])
 			.unknown("f2f2f2")
 const markerColor  = (range) => scaleThreshold()
   .domain([0,100,200])
@@ -164,7 +164,7 @@ class WorldMap extends Component {
 					outline: "none"
 				},
 				hover: {
-					fill: '#ff5983',
+					fill: '#2a2a2a',
 					stroke: "#607D8B",
 					strokeWidth: 0.75,
 					outline: "none",
@@ -252,8 +252,8 @@ class WorldMap extends Component {
 													cy={0}
 													r={markerScale(debtToGDP)}
 													opacity={0.9}
-													fill={markerColor(['gray',"#ffffff", '#2a2a2a'])(debtToGDP)}
-													stroke="#607D8B"
+													fill={markerColor(['#343434',"#ffffff", '#2a2a2a'])(debtToGDP)}
+														stroke="#A9A9A9"
 													strokeWidth="2"
 													onClick={()=>console.log(country)}
 												/>
@@ -263,8 +263,9 @@ class WorldMap extends Component {
 												 x={2}
 												style={{
 													fontSize:textScale(debtToGDP),
-		                      fontFamily: "Roboto, sans-serif",
-		                      fill: markerColor(['gray', '#2a2a2a', "#ffffff"])(debtToGDP)
+													fontFamily: "Roboto, sans-serif",
+													fontWeight: "600",
+		                      fill: markerColor(['#343434', '#2a2a2a', "#ffffff"])(debtToGDP)
 		                    }}>
 												{debtToGDP<100?"":"+"}{-100+debtToGDP}%
 												</text>

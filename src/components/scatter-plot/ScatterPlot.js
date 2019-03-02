@@ -127,9 +127,9 @@ console.log(this.props)
       <div
         data-tip>
        <XYPlot
-					width={window.innerWidth - 400}
-					height={window.innerHeight - 80}
-					style={{marginLeft: '400px'}}
+					width={window.innerWidth - 80}
+					height={window.innerHeight - 160}
+					style={{marginLeft: '40px', marginTop: '40px', marginRight: '40px'}}
           animation
           xDomain={[0,1]}
           xDomain={
