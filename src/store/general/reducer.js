@@ -2,6 +2,8 @@ import * as Actions from './actions';
 
 const generalState = {
 	title: 'IVIS Group Project',
+	showMap: true,
+	showScatter: false,
 	data: null,
 	fetching: false,
 	error: null
@@ -9,6 +11,13 @@ const generalState = {
 
 export const general = (state = generalState, action) => {
 	switch (action.type) {
+		case Actions.TOGGLE_VISUALIZATION: {
+			return {
+				...state,
+				showMap: !state.showMap,
+				showScatter: !state.showScatter
+			}
+		}
 		case Actions.FETCH_START: {
 			return {
 				...state,

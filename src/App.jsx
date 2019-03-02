@@ -8,22 +8,19 @@ import ScatterPlot from './components/scatter-plot/ScatterPlot';
 import 'rc-slider/assets/index.css';
 import { Button } from 'react-bootstrap';
 
-import { fetchCountries } from './store/'
+import { fetchCountries, toggleVisualization } from './store/'
 
 class App extends Component {
-	state ={
-		graph: false
-	}
 	componentDidMount() {
 		this.props.fetchCountries();
 	}
+
 	render() {
 		return (
 			<>
-				<Button onClick={() => this.setState({ graph: !this.state.graph })} id="filterButton" bsPrefix="btn btn-primary box-shadow graph">{!this.state.graph ? (<span><i class="fas fa-chart-area"></i> Show graph</span>) : (<span><i class="fas fa-globe-americas"></i> Show map</span>)}</Button>
-				<SideBar isGraphShown={this.state.graph}/>
-				{this.state.graph?<ScatterPlot/>:<WorldMap />}
-
+				<Button onClick={this.props.toggleVisualization} id="filterButton" bsPrefix="btn btn-primary box-shadow graph">{!this.props.graph ? (<span><i class="fas fa-chart-area"></i> Show graph</span>) : (<span><i class="fas fa-globe-americas"></i> Show map</span>)}</Button>
+				<SideBar isGraphShown={this.props.graph} />
+				{this.props.graph ? <ScatterPlot /> : <WorldMap />}
 			</>
 		);
 	}
@@ -31,13 +28,14 @@ class App extends Component {
 
 const mapStateToProps = state => ({
 	title: state.general.title,
+	graph: state.general.showScatter
 });
 
 
- const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
 	return {
 		fetchCountries: () => dispatch(fetchCountries()),
-
+		toggleVisualization: () => dispatch(toggleVisualization())
 	}
 }
 
