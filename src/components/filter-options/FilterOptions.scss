@@ -1,27 +1,33 @@
 @import '../../globals';
 
+$title-fontsize: 19px;
+$subtitle-fontsize: 14px;
 
 .filter-container {
-    margin: 35px auto;
+    margin: 0 auto;
 }
 
 .filter-title {
-    font-size: 21px;
+    font-size: $title-fontsize;
     color: $color-white;
     font-weight: bold;
     text-decoration: none;
 }
 
 .filter-left-scale {
-    font-size: 15px;
+    font-size: $subtitle-fontsize;
     color: $color-white;
     display: inline-block;
 }
 
 .filter-right-scale {
-    font-size: 15px;
+    font-size: $subtitle-fontsize;
     color: $color-white;
     float: right;
+}
+
+.slider-body {
+    margin: 0px 5px 55px;
 }
 
 .rc-tooltip { z-index: 1500; }
