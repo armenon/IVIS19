@@ -1,5 +1,5 @@
 /**
- * @typedef {{min: number, max: number}} Range
+ * @typedef {{min: Number, max: Number}} Range
 */
 
 import { pfx } from '../../utils/pfx';
@@ -11,6 +11,7 @@ export const SET_DEBT_RANGE = pfx(base, 'SET_DEBT_RANGE');
 export const SET_POPULATION_RANGE = pfx(base, 'SET_POPULATION_RANGE');
 export const SET_HDI_RANGE = pfx(base, 'SET_HDI_RANGE');
 export const SET_YEAR = pfx(base, 'SET_YEAR');
+export const SEARCH_COUNTRIES = pfx(base, 'SEARCH_COUNTRIES');
 
 
 /**
@@ -41,6 +42,16 @@ export const setHdiRange = hdiRange => {
 	return async dispatch => dispatch({ type: SET_HDI_RANGE, hdiRange });
 }
 
+/**
+ * @param {Number} year
+ */
 export const setYear = year => {
 	return async dispatch => dispatch({ type: SET_YEAR, year });
+}
+
+/**
+ * @param {String} str
+ */
+export const searchCountries = str => {
+	return { type: SEARCH_COUNTRIES, str }
 }
