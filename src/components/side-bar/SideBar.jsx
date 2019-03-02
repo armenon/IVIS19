@@ -37,9 +37,9 @@ class SideBar extends Component {
 	}
 	renderCountries() {
 		return this.state.availableCountries.map(country => (
-			<div className="checkbox">
+			<div className="checkbox active">
 				<label className="d-flex align-items-center">
-					<input value={country.id} key={country.id} type="checkbox" name="" id="" />
+					<input value={country.id} key={country.id} type="checkbox" name="" id="" checked/>
 					<div className="spacing-h x-small"></div>
 					{country.name}
 				</label>
@@ -61,7 +61,7 @@ class SideBar extends Component {
 							<p>Visualizing debt in the world</p>
 						</span>
 					</div>
-					<div className="spacing large"></div>
+					<div className="spacing medium"></div>
 					<div className="country-search">
 						<span className="search-holder">
 							<i className="fa fa-search"></i>
@@ -71,16 +71,16 @@ class SideBar extends Component {
 							{this.renderCountries()}
 						</div>
 						<div className="select-all">
-							<div className="checkbox">
+							<div className="checkbox active">
 								<label className="d-flex align-items-center">
-									<input type="checkbox" name="" id="" />
+									<input type="checkbox" name="" id="" checked/>
 									<div className="spacing-h x-small"></div>
 									Select all
 								</label>
 							</div>
 						</div>
 					</div>
-					<div className="spacing large"></div>
+					<div className="spacing medium"></div>
 					<p className="label">Filters</p>
 					<div className="filters">
 						<FilterOption filterName="Debt" filterLeftValue="USD 0" filterRightValue="USD 20B" minFilterValue={0} maxFilterValue = {20} defaultValueMin = {4} defaultValueMax = {7} step={1}></FilterOption>
