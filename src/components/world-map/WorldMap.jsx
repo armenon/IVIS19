@@ -246,11 +246,12 @@ class WorldMap extends Component {
 
 											const debtToGDP = Math.round(country.properties.gapminder.debt_to_foreigners_by_public_and_private_percent_of_gni[this.props.year])
 											return(
-												<Marker key={i} marker={{coordinates:this.getCenter(country.geometry)}}>
+												<Marker key={i}  marker={{coordinates:this.getCenter(country.geometry)}}>
 												<circle
 													cx={0}
 													cy={0}
 													r={markerScale(debtToGDP)}
+													opacity={0.9}
 													fill={markerColor(['gray',"#ffffff", '#2a2a2a'])(debtToGDP)}
 													stroke="#607D8B"
 													strokeWidth="2"

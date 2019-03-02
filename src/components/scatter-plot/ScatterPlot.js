@@ -8,7 +8,9 @@ import {
   YAxis,
   VerticalGridLines,
   HorizontalGridLines,
-  MarkSeries
+  MarkSeries,
+  LabelSeries,
+  Highlight
 } from 'react-vis';
 
 import { renderToString } from 'react-dom/server';
@@ -34,13 +36,26 @@ import {
 
 const plotScale=scaleLinear()
       .domain([0,100,200])
-      .range([30,1,30])
+      .range([50,1,50])
       .unknown(1)
+
 
 const plotColor=scaleThreshold()
       .domain([100,200])
       .range(["#ffffff", '#2a2a2a'])
       .unknown('gray')
+
+const textScale  = scaleLinear()
+.domain([0,100,200])
+.range([16,1,16])
+.clamp(true)
+
+
+const textColor=scaleThreshold()
+      .domain([100,200])
+      .range(['#2a2a2a',"#ffffff"])
+      .unknown('gray')
+
 
 class ScatterPlot extends Component {
   constructor(props){
@@ -52,7 +67,13 @@ class ScatterPlot extends Component {
     this.state = {
       height:null,
       width:null,
-      country: null
+      country: null,
+      lastDrawLocation: {
+        top:2000,
+        bottom:0,
+        left:0,
+        right:1
+      },
     }
   }
   componentDidUpdate(){
@@ -72,31 +93,36 @@ class ScatterPlot extends Component {
 
 
   getData(country){
-    const hdi = country.properties.gapminder.hdi_human_development_index[this.props.year] || 0;
-    const debt = country.properties.gapminder.external_debt_total_us_not_inflation_adjusted[this.props.year] || 0;
-    const debtToGDP= country.properties.gapminder.debt_to_foreigners_by_public_and_private_percent_of_gni[this.props.year] || 0
-    console.log(debtToGDP)
+    const hdi = country.properties.gapminder.hdi_human_development_index[this.props.year] || null;
+    const debt = country.properties.gapminder.external_debt_total_us_not_inflation_adjusted[this.props.year] || null;
+    const debtToGDP= country.properties.gapminder.debt_to_foreigners_by_public_and_private_percent_of_gni[this.props.year] || null
 
+    if(!debt) return null;
     return(
-      {x:hdi, y:debt, size:plotScale(debtToGDP), color:plotColor(debtToGDP), name:country.properties.name }
+      {x:hdi, y:debt/1000000000, size:plotScale(debtToGDP), color:plotColor(debtToGDP), label:country.properties.name, style: {fill:textColor(debtToGDP), fontSize: textScale(debtToGDP)}}
     )
   }
 
 	render() {
 console.log(this.props)
     const { data, fetching, error} = this.props;
+    const { lastDrawLocation } = this.state;
 
-    console.log(fetching, error)
-
+    const reset = {
+        top:2000,
+        bottom:0,
+        left:0,
+        right:1
+      }
     //x: happiness y:debt? size: debtToGDP?
     if (!!fetching || !!error || !data){
       return null
     }
 
-    console.log(data)
-    const filteredData = data.filter(d => d.properties.gapminder.external_debt_total_us_not_inflation_adjusted[this.props.year])
-    const plotData = filteredData.map(c => this.getData(c))
 
+    const filteredData = data.filter(d => d.properties.gapminder.external_debt_total_us_not_inflation_adjusted[this.props.year] && d.properties.gapminder.debt_to_foreigners_by_public_and_private_percent_of_gni[this.props.year] && d.properties.gapminder.hdi_human_development_index[this.props.year])
+    const plotData = filteredData.map(c => this.getData(c))
+    const labelData = plotData.filter(d => d.size>90 || d.y>250)
 		return (
       <div
         data-tip>
@@ -104,22 +130,61 @@ console.log(this.props)
 					width={window.innerWidth - 400}
 					height={window.innerHeight - 80}
 					style={{marginLeft: '400px'}}
+          animation
+          xDomain={[0,1]}
+          xDomain={
+              lastDrawLocation && [
+                lastDrawLocation.left,
+                lastDrawLocation.right
+              ]
+            }
+          yDomain={
+            lastDrawLocation && [
+              lastDrawLocation.bottom,
+              lastDrawLocation.top
+            ]
+          }
 				>
         <VerticalGridLines />
        <HorizontalGridLines />
-       <XAxis title="HDI"/>
-       <YAxis title="Debt"/>
+       <XAxis title="HDI" tickTotal={11} tickValues={[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]}/>
+       <YAxis title="Debt (Billion USD)"/>
         <MarkSeries
           animation
+          stroke="#607D8B"
 
+          opacity={0.9}
           colorType="literal"
           onValueMouseOver={this.handleHover}
           onValueMouseOut={()=>this.setState({country:null})}
           className="mark-series-example"
-          sizeRange={[1, 30]}
+          sizeRange={[1, 50]}
           data={plotData}/>
+
+            <LabelSeries
+              labelAnchorY="middle"
+              labelAnchorX="middle"
+              strokeWidth="2"
+              animation
+              allowOffsetToBeReversed
+              data={labelData}/>
+              <Highlight
+
+
+                onBrushEnd={area => {area==null?this.setState({lastDrawLocation:reset}):this.setState({lastDrawLocation: area})}}
+                onDrag={area => {
+                    this.setState({
+                      lastDrawLocation: {
+                        bottom: lastDrawLocation.bottom + (area.top - area.bottom),
+                        left: lastDrawLocation.left - (area.right - area.left),
+                        right: lastDrawLocation.right - (area.right - area.left),
+                        top: lastDrawLocation.top + (area.top - area.bottom)
+                      }
+                    });
+                  }}
+                  />
       </XYPlot>
-      {!!this.state.country && <ReactTooltip getContent={() => this.renderTooltip()} />}
+      {!!this.state.country && <ReactTooltip getContent={() => this.renderTooltip()}/>}
       </div>
 
 		);
