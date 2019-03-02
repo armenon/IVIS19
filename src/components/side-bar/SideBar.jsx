@@ -37,23 +37,21 @@ class SideBar extends Component {
 	}
 	renderCountries() {
 		return this.state.availableCountries.map(country => (
-			<div className="d-flex align-items-center checkbox">
-				<input value={country.id} key={country.id} type="checkbox" name="" id="" />
-				<div className="spacing-h x-small"></div>
-				<span>
+			<div className="checkbox active">
+				<label className="d-flex align-items-center">
+					<input value={country.id} key={country.id} type="checkbox" name="" id="" checked/>
+					<div className="spacing-h x-small"></div>
 					{country.name}
-				</span>
+				</label>
 			</div>
 		));
 	}
 	render() {
 		return (
 			<div>
-				<Button onClick={() => this.toggleMenu()} id="filterButton" bsPrefix="btn btn-primary box-shadow">Filters <i className="fa fa-filter"></i></Button>
-				<div className={this.state.isShown || this.props.isGraphShown ? 'side-bar' : 'side-bar hidden'}>
-					{!this.props.isGraphShown && (
-						<a onClick={() => this.toggleMenu()}><i className="fas fa-arrow-left"></i> Hide filters</a>
-					)}
+				{!this.props.isGraphShown && (<Button onClick={() => this.toggleMenu()} id="filterButton" bsPrefix="btn btn-primary box-shadow">Filters <i className="fa fa-filter"></i></Button>)}
+				<div className={this.state.isShown && !this.props.isGraphShown ? 'side-bar' : 'side-bar hidden'}>
+					<a onClick={() => this.toggleMenu()}><i className="fas fa-arrow-left"></i> Hide filters</a>
 					<div className="spacing"></div>
 					<div className="logo d-flex">
 						<i className="fas fa-dollar-sign"></i>
@@ -63,7 +61,7 @@ class SideBar extends Component {
 							<p>Visualizing debt in the world</p>
 						</span>
 					</div>
-					<div className="spacing large"></div>
+					<div className="spacing medium"></div>
 					<div className="country-search">
 						<span className="search-holder">
 							<i className="fa fa-search"></i>
@@ -73,16 +71,16 @@ class SideBar extends Component {
 							{this.renderCountries()}
 						</div>
 						<div className="select-all">
-							<div className="d-flex align-items-center checkbox">
-								<input type="checkbox" name="" id="" />
-								<div className="spacing-h x-small"></div>
-								<span>
+							<div className="checkbox active">
+								<label className="d-flex align-items-center">
+									<input type="checkbox" name="" id="" checked/>
+									<div className="spacing-h x-small"></div>
 									Select all
-								</span>
+								</label>
 							</div>
 						</div>
 					</div>
-					<div className="spacing large"></div>
+					<div className="spacing medium"></div>
 					<p className="label">Filters</p>
 					<div className="filters">
 						<FilterOption filterName="Debt" filterLeftValue="USD 0" filterRightValue="USD 20B" minFilterValue={0} maxFilterValue = {20} defaultValueMin = {4} defaultValueMax = {7} step={1}></FilterOption>
@@ -90,8 +88,8 @@ class SideBar extends Component {
 						<FilterOption filterName="Population" filterLeftValue="0" filterRightValue="1400M" minFilterValue={0} maxFilterValue = {1400} defaultValueMin = {700} defaultValueMax = {900} step={10}></FilterOption>
 					</div>
 				</div>
-				<TimeBar onYearChange={(e)=>this.props.setYear(e.target.value)} year={this.props.year} isFull={!this.state.isShown} />
-				<VariablesLegend isFull={!this.state.isShown} />
+				<TimeBar onYearChange={(e)=>this.props.setYear(e.target.value)} year={this.props.year} isFull={!this.state.isShown || this.props.isGraphShown} />
+				<VariablesLegend isFull={!this.state.isShown || this.props.isGraphShown} />
 			</div>
 		);
 	}

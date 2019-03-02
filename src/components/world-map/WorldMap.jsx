@@ -39,7 +39,7 @@ import './WorldMap.scss';
 
 const fillProperties = scaleLinear()
 			.domain([0,0.5,1])
-			.range(['red', 'yellow', 'green'])
+			.range(['#dc3545', '#ffc107', '#28a745'])
 			.unknown("f2f2f2")
 const markerColor  = (range) => scaleThreshold()
   .domain([0,100,200])
@@ -158,13 +158,13 @@ class WorldMap extends Component {
 		return (
 			{
 				default: {
-					fill: fillProperties(geography.properties.gapminder.hdi_human_development_index[this.props.year]),
+					fill: fillProperties(geography.properties.gapminder.hdi_2017[this.props.year]),
 					stroke: "#607D8B",
 					strokeWidth: 0.75,
 					outline: "none"
 				},
 				hover: {
-					fill: '#ff5983',
+					fill: '#2a2a2a',
 					stroke: "#607D8B",
 					strokeWidth: 0.75,
 					outline: "none",
@@ -242,17 +242,18 @@ class WorldMap extends Component {
 										}
 									</Geographies>
 									<Markers>
-										{ data.filter(d => d.properties.gapminder.external_debt_total_us_not_inflation_adjusted[this.props.year]).map((country,i)=> {
+										{ data.filter(d => d.properties.gapminder.debt_by_gdp[this.props.year]).map((country,i)=> {
 
-											const debtToGDP = Math.round(country.properties.gapminder.debt_to_foreigners_by_public_and_private_percent_of_gni[this.props.year])
+											const debtToGDP = Math.round(country.properties.gapminder.debt_by_gdp[this.props.year])
 											return(
-												<Marker key={i} marker={{coordinates:this.getCenter(country.geometry)}}>
+												<Marker key={i}  marker={{coordinates:this.getCenter(country.geometry)}}>
 												<circle
 													cx={0}
 													cy={0}
 													r={markerScale(debtToGDP)}
-													fill={markerColor(['gray',"#ffffff", '#2a2a2a'])(debtToGDP)}
-													stroke="#607D8B"
+													opacity={0.9}
+													fill={markerColor(['#343434',"#ffffff", '#2a2a2a'])(debtToGDP)}
+													stroke={fillProperties(country.properties.gapminder.hdi_2017[this.props.year])}
 													strokeWidth="2"
 													onClick={()=>console.log(country)}
 												/>
@@ -262,8 +263,9 @@ class WorldMap extends Component {
 												 x={2}
 												style={{
 													fontSize:textScale(debtToGDP),
-		                      fontFamily: "Roboto, sans-serif",
-		                      fill: markerColor(['gray', '#2a2a2a', "#ffffff"])(debtToGDP)
+													fontFamily: "Roboto, sans-serif",
+													fontWeight: "600",
+		                      fill: markerColor(['#343434', '#2a2a2a', "#ffffff"])(debtToGDP)
 		                    }}>
 												{debtToGDP<100?"":"+"}{-100+debtToGDP}%
 												</text>

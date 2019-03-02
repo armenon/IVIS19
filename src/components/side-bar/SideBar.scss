@@ -56,6 +56,11 @@
 		color: $color-light-gray;
 		margin-bottom: 10px;
 		font-size: 15px;
+		label, input {
+			&:hover {
+				cursor: pointer;
+			}
+		}
 		input {
 			margin-bottom: 4px;
 			opacity: 0.2;
