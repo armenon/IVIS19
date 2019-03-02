@@ -158,7 +158,7 @@ class WorldMap extends Component {
 		return (
 			{
 				default: {
-					fill: fillProperties(geography.properties.gapminder.hdi_human_development_index[this.props.year]),
+					fill: fillProperties(geography.properties.gapminder.hdi_2017[this.props.year]),
 					stroke: "#607D8B",
 					strokeWidth: 0.75,
 					outline: "none"
@@ -253,7 +253,7 @@ class WorldMap extends Component {
 													r={markerScale(debtToGDP)}
 													opacity={0.9}
 													fill={markerColor(['#343434',"#ffffff", '#2a2a2a'])(debtToGDP)}
-														stroke="#A9A9A9"
+													stroke={fillProperties(country.properties.gapminder.hdi_2017[this.props.year])}
 													strokeWidth="2"
 													onClick={()=>console.log(country)}
 												/>
