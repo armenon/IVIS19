@@ -4,7 +4,7 @@ import FilterOption from '../filter-options/FilterOptions'
 import { connect } from 'react-redux'
 import TimeBar from '../time-bar/TimeBar';
 import VariablesLegend from '../variables-legend/VariablesLegend';
-import { setYear, enableOptimization, disableOptimization, showSidebar, hideSidebar, searchCountries, selectCountry, unselectCountry, selectAll, unselectAll } from '../../store/'
+import { setYear, enableOptimization, disableOptimization, showSidebar, hideSidebar, searchCountries, selectCountry, unselectCountry, selectAll, unselectAll, setDebtRange, setHdiRange } from '../../store/'
 import './SideBar.scss';
 
 
@@ -33,6 +33,20 @@ class SideBar extends Component {
 		return this.props.selectedCountries.some(selectedCountry => selectedCountry.id === country.id);
 	}
 
+	handleDebtChange = (values) => {
+		this.props.setDebt({
+			min: values[0],
+			max: values[1]
+		})
+	}
+
+	handleHdiChange = (values) => {
+		this.props.setHdi({
+			min: values[0],
+			max: values[1]
+		})
+	}
+
 	toggleMenu() {
 		this.props.isShown ? this.props.hide() : this.props.show();
 	}
@@ -50,7 +64,7 @@ class SideBar extends Component {
 	}
 
 	render() {
-		const { isGraphShown, isShown, year, results } = this.props;
+		const { isGraphShown, isShown, year, results, debt, hdi } = this.props;
 		return (
 			<div>
 				{!isGraphShown && (<Button onClick={() => this.toggleMenu()} id="filterButton" bsPrefix="btn btn-primary box-shadow">Filters <i className="fa fa-filter"></i></Button>)}
@@ -77,7 +91,7 @@ class SideBar extends Component {
 						<div className="select-all">
 							<div className="checkbox active">
 								<label className="d-flex align-items-center">
-									<input type="checkbox" name="" id="" defaultChecked onChange={this.handleSelectAll}/>
+									<input type="checkbox" name="" id="" defaultChecked onChange={this.handleSelectAll} />
 									<div className="spacing-h x-small"></div>
 									Select all
 								</label>
@@ -88,12 +102,12 @@ class SideBar extends Component {
 					<p className="label">Filters</p>
 					<div className="filters">
 						<FilterOption filterName="Debt" filterLeftValue="USD 0" filterRightValue="USD 20B"
-							minFilterValue={0} maxFilterValue={20} defaultValueMin={4} /*afterChangeFunction=randomFunction(value) <<<---- Send a function that can accept the value. It returns a [X,Y]*/
-							defaultValueMax={7} step={1}></FilterOption>
+							minFilterValue={0} maxFilterValue={20} defaultValueMin={debt.min} /*afterChangeFunction=randomFunction(value) <<<---- Send a function that can accept the value. It returns a [X,Y]*/
+							defaultValueMax={debt.max} step={1} afterChangeFunction={this.handleDebtChange}></FilterOption>
 						<FilterOption filterName="HPI" filterLeftValue="0" filterRightValue="1"
-							minFilterValue={0} maxFilterValue={1} defaultValueMin={0.4} /*afterChangeFunction=randomFunction(value)*/
-							defaultValueMax={0.7} step={0.01}></FilterOption>
-						
+							minFilterValue={0} maxFilterValue={1} defaultValueMin={hdi.min} /*afterChangeFunction=randomFunction(value)*/
+							defaultValueMax={hdi.max} step={0.01} afterChangeFunction={this.handleDebtChange}></FilterOption>
+
 					</div>
 				</div>
 				<TimeBar onYearChange={this.handleYearChange} year={year} isFull={!isShown || isGraphShown} />
@@ -107,7 +121,9 @@ const mapStateToProps = state => ({
 	isShown: state.general.showSidebar,
 	results: state.filters.countriesSearchResults,
 	year: state.filters.year,
-	selectedCountries: state.filters.selectedCountries
+	selectedCountries: state.filters.selectedCountries,
+	debt: state.filters.debt,
+	hdi: state.filters.hdi
 });
 
 
@@ -124,13 +140,10 @@ const mapDispatchToProps = dispatch => {
 		selectCountry: country => dispatch(selectCountry(country)),
 		unselectCountry: country => dispatch(unselectCountry(country)),
 		selectAll: () => dispatch(selectAll()),
-		unselectAll: () => dispatch(unselectAll())
+		unselectAll: () => dispatch(unselectAll()),
+		setDebt: (debt) => dispatch(setDebtRange(debt)),
+		setHdi: (hdi) => dispatch(setHdiRange(hdi))
 	}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideBar);
-
-
-/*<FilterOption filterName="Population" filterLeftValue="0" filterRightValue="1400M"
-							minFilterValue={0} maxFilterValue={1400} defaultValueMin={700} /*afterChangeFunction=randomFunction(value)*/
-							/*defaultValueMax={900} step={10}></FilterOption>*/

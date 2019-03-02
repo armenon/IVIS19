@@ -6,16 +6,16 @@ const filtersState = {
 	countriesSearchResults: [...countryNames],
 	selectedCountries: [...countryNames],
 	debt: {
-		min: null,
-		max: null
+		min: 0,
+		max: 20
 	},
 	population: {
 		min: null,
 		max: null
 	},
 	hdi: {
-		min: null,
-		max: null
+		min: 0,
+		max: 1
 	},
 	year: 1990
 }
