@@ -71,6 +71,8 @@ class FilterOption extends Component {
                             marginTop: -8,
                             backgroundColor: '#ffffff',
                         }}
+                        activeDotStyle={{ borderColor: "#FFFFFF" }}
+                        onAfterChange= {(value) => console.log(value)} //TO-DO: Call proper function from here
                         defaultValue={[this.props.defaultValueMin, this.props.defaultValueMax]} tipFormatter={value => `${value}`}/>
                 </div>
             </div>
