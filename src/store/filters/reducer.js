@@ -82,7 +82,7 @@ export const filters = (state = filtersState, action) => {
 }
 
 const selectCountry = (country, selectedCountries) => {
-	if (selectedCountries.some(selectedCountry => selectCountry.id === country.id)) return;
+	if (selectedCountries.some(selectedCountry => selectCountry.id === country.id)) return selectedCountries;
 	return [...selectedCountries, country]
 }
 
