@@ -63,6 +63,14 @@ class FilterOption extends Component {
                 <div className = "slider-body">
                     <Range marks={marks} trackStyle={[{ backgroundColor: "#A9A9A9" }]} railStyle={{ backgroundColor: "#343434" }} 
                         step={this.props.step} min={this.props.minFilterValue} max={this.props.maxFilterValue} 
+                        handleStyle={{
+                            borderColor: "#ffffff",
+                            height: 23,
+                            width: 23,
+                            marginLeft: -10,
+                            marginTop: -8,
+                            backgroundColor: '#ffffff',
+                        }}
                         defaultValue={[this.props.defaultValueMin, this.props.defaultValueMax]} tipFormatter={value => `${value}`}/>
                 </div>
             </div>

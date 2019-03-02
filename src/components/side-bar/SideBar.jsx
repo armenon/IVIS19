@@ -87,6 +87,7 @@ class SideBar extends Component {
 					<div className="filters">
 						<FilterOption filterName="Debt" filterLeftValue="USD 0" filterRightValue="USD 20B" minFilterValue={0} maxFilterValue = {20} defaultValueMin = {4} defaultValueMax = {7} step={1}></FilterOption>
 						<FilterOption filterName="HPI" filterLeftValue="0" filterRightValue="1" minFilterValue={0} maxFilterValue = {1} defaultValueMin = {0.4} defaultValueMax = {0.7} step={0.01}></FilterOption>
+						<FilterOption filterName="Population" filterLeftValue="0" filterRightValue="1400M" minFilterValue={0} maxFilterValue = {1400} defaultValueMin = {700} defaultValueMax = {900} step={10}></FilterOption>
 					</div>
 				</div>
 				<TimeBar onYearChange={(e)=>this.props.setYear(e.target.value)} year={this.props.year} isFull={!this.state.isShown} />
