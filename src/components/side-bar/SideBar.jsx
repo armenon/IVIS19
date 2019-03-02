@@ -4,7 +4,7 @@ import FilterOption from '../filter-options/FilterOptions'
 import { connect } from 'react-redux'
 import TimeBar from '../time-bar/TimeBar';
 import VariablesLegend from '../variables-legend/VariablesLegend';
-import { setYear, enableOptimization, disableOptimization, showSidebar, hideSidebar, searchCountries } from '../../store/'
+import { setYear, enableOptimization, disableOptimization, showSidebar, hideSidebar, searchCountries, selectCountry, unselectCountry, selectAll, unselectAll } from '../../store/'
 import './SideBar.scss';
 
 
@@ -19,6 +19,20 @@ class SideBar extends Component {
 		this.props.setYear(year);
 	}
 
+	handleSelectCountry = (country) => (event) => {
+		const checked = event.target.checked;
+		checked ? this.props.selectCountry(country) : this.props.unselectCountry(country);
+	}
+
+	handleSelectAll = (event) => {
+		const checked = event.target.checked;
+		checked ? this.props.selectAll() : this.props.unselectAll();
+	}
+
+	handleChecked = (country) => {
+		return this.props.selectedCountries.some(selectedCountry => selectedCountry.id === country.id);
+	}
+
 	toggleMenu() {
 		this.props.isShown ? this.props.hide() : this.props.show();
 	}
@@ -27,7 +41,7 @@ class SideBar extends Component {
 		return results && results.map(country => (
 			<div className="checkbox active" key={country.id} >
 				<label className="d-flex align-items-center">
-					<input value={country.id} type="checkbox" name="" id="" checked />
+					<input value={country.id} type="checkbox" name="" id="" defaultChecked checked={this.handleChecked(country)} onChange={this.handleSelectCountry(country)} />
 					<div className="spacing-h x-small"></div>
 					{country.name}
 				</label>
@@ -63,7 +77,7 @@ class SideBar extends Component {
 						<div className="select-all">
 							<div className="checkbox active">
 								<label className="d-flex align-items-center">
-									<input type="checkbox" name="" id="" checked />
+									<input type="checkbox" name="" id="" defaultChecked onChange={this.handleSelectAll}/>
 									<div className="spacing-h x-small"></div>
 									Select all
 								</label>
@@ -93,9 +107,9 @@ class SideBar extends Component {
 
 const mapStateToProps = state => ({
 	isShown: state.general.showSidebar,
-	countries: state.filters.countries,
 	results: state.filters.countriesSearchResults,
-	year: state.filters.year
+	year: state.filters.year,
+	selectedCountries: state.filters.selectedCountries
 });
 
 
@@ -103,12 +117,16 @@ const mapDispatchToProps = dispatch => {
 	return {
 		show: () => dispatch(showSidebar()),
 		hide: () => dispatch(hideSidebar()),
-		setYear: async (year) => {
+		setYear: async year => {
 			dispatch(disableOptimization(year))
 			await dispatch(setYear(year))
 			dispatch(enableOptimization(year))
 		},
-		search: (str) => dispatch(searchCountries(str))
+		search: str => dispatch(searchCountries(str)),
+		selectCountry: country => dispatch(selectCountry(country)),
+		unselectCountry: country => dispatch(unselectCountry(country)),
+		selectAll: () => dispatch(selectAll()),
+		unselectAll: () => dispatch(unselectAll())
 	}
 }
 

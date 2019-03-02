@@ -3,9 +3,8 @@ import { countryNames } from '../../utils/countries';
 
 const filtersState = {
 	filterResults: [],
-	countries: [ ...countryNames ],
-	countriesSearchResults: [ ...countryNames ],
-	selectedCountries: [],
+	countriesSearchResults: [...countryNames],
+	selectedCountries: [...countryNames],
 	debt: {
 		min: null,
 		max: null
@@ -41,12 +40,6 @@ export const filters = (state = filtersState, action) => {
 				population: action.populationRange
 			}
 		}
-		case Actions.SET_SELECTED_COUNTRIES: {
-			return {
-				...state,
-				selectedCountries: [...action.countries]
-			}
-		}
 		case Actions.SET_YEAR: {
 			return {
 				...state,
@@ -56,12 +49,45 @@ export const filters = (state = filtersState, action) => {
 		case Actions.SEARCH_COUNTRIES: {
 			return {
 				...state,
-				countriesSearchResults: action.str ? filterCountries(action.str, state.countries) : [ ...state.countries ]
+				countriesSearchResults: action.str ? filterCountries(action.str, [...state.countries]) : [...countryNames]
+			}
+		}
+		case Actions.SELECT_COUNTRY: {
+			return {
+				...state,
+				selectedCountries: selectCountry(action.country, [...state.selectedCountries])
+			}
+		}
+		case Actions.UNSELECT_COUNTRY: {
+			return {
+				...state,
+				selectedCountries: unselectCountry(action.country, [...state.selectedCountries])
+			}
+		}
+		case Actions.SELECT_ALL: {
+			return {
+				...state,
+				selectedCountries: [...countryNames],
+			}
+		}
+		case Actions.UNSELECT_ALL: {
+			return {
+				...state,
+				selectedCountries: [],
 			}
 		}
 		default:
 			return state;
 	}
+}
+
+const selectCountry = (country, selectedCountries) => {
+	if (selectedCountries.some(selectedCountry => selectCountry.id === country.id)) return;
+	return [...selectedCountries, country]
+}
+
+const unselectCountry = (country, selectedCountries) => {
+	return selectedCountries.filter(selectedCountry => selectedCountry.id !== country.id);
 }
 
 const filterCountries = (str, countries) => {
