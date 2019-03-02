@@ -37,9 +37,9 @@ class SideBar extends Component {
 	}
 	renderCountries() {
 		return this.state.availableCountries.map(country => (
-			<div className="checkbox">
+			<div className="checkbox active">
 				<label className="d-flex align-items-center">
-					<input value={country.id} key={country.id} type="checkbox" name="" id="" />
+					<input value={country.id} key={country.id} type="checkbox" name="" id="" checked/>
 					<div className="spacing-h x-small"></div>
 					{country.name}
 				</label>
@@ -71,9 +71,9 @@ class SideBar extends Component {
 							{this.renderCountries()}
 						</div>
 						<div className="select-all">
-							<div className="checkbox">
+							<div className="checkbox active">
 								<label className="d-flex align-items-center">
-									<input type="checkbox" name="" id="" />
+									<input type="checkbox" name="" id="" checked/>
 									<div className="spacing-h x-small"></div>
 									Select all
 								</label>
