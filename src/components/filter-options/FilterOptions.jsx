@@ -16,7 +16,8 @@ var marks = {
     0: {
         style: {
             fontSize: 10,
-            color: "#A9A9A9"
+            color: "#A9A9A9",
+            marginLeft: 5
         },
         label: <strong>MIN</strong>
     }
@@ -33,7 +34,8 @@ class FilterOption extends Component {
             0: {
                 style: {
                     fontSize: 10,
-                    color: "#A9A9A9"
+                    color: "#A9A9A9",
+                    marginLeft: 5
                 },
                 label: <strong>MIN</strong>
             }
@@ -45,7 +47,8 @@ class FilterOption extends Component {
         marks[tempValue] =  {
             style: {
               fontSize: 10,
-              color: "#A9A9A9"
+              color: "#A9A9A9",
+              marginLeft: -6
             },
             label: <strong>MAX</strong>,
           }
@@ -65,8 +68,8 @@ class FilterOption extends Component {
                         step={this.props.step} min={this.props.minFilterValue} max={this.props.maxFilterValue} 
                         handleStyle={{
                             borderColor: "#ffffff",
-                            height: 23,
-                            width: 23,
+                            height: 19,
+                            width: 19,
                             marginLeft: -10,
                             marginTop: -8,
                             backgroundColor: '#ffffff',
