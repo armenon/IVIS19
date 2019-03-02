@@ -4,6 +4,7 @@ const generalState = {
 	title: 'IVIS Group Project',
 	showMap: true,
 	showScatter: false,
+	showSidebar: true,
 	data: null,
 	fetching: false,
 	error: null
@@ -38,6 +39,18 @@ export const general = (state = generalState, action) => {
 				...state,
 				fetching: false,
 				error: action.error
+			}
+		}
+		case Actions.SHOW_SIDEBAR: {
+			return {
+				...state,
+				showSidebar: true
+			}
+		}
+		case Actions.HIDE_SIDEBAR: {
+			return {
+				...state,
+				showSidebar: false
 			}
 		}
 		default:

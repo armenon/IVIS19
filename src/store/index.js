@@ -1,10 +1,13 @@
 import { combineReducers } from 'redux';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
 import { general } from './general/reducer';
 import { map } from './map/reducer';
 import { filters } from './filters/reducer';
+
+import { FETCH_SUCCESS } from './general/actions';
 
 const reducers = combineReducers({
 	general,
@@ -12,7 +15,14 @@ const reducers = combineReducers({
 	map
 });
 
-const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// compose a redux devtools enhancer and sanitize large actions/state
+const composeEnhancer = composeWithDevTools({
+	actionSanitizer: (action) => (
+		action.type === FETCH_SUCCESS && action.data ?
+		{ ...action, data: '<<LONG_BLOB>>' } : action
+	),
+  stateSanitizer: (state) => state.general.data ? { ...state, general: { data: '<<LONG_BLOB>>' } } : { ...state }
+})
 
 // export store
 export const store = createStore(
