@@ -17,35 +17,29 @@ const Range = createSliderWithTooltip(Slider.Range);
 
 class FilterOption extends Component {
 
-    constructor(props){
-        super(props)
-
-
-      }
-
-
-
     render() {
 
-      var marks = {
-          0: {
-              style: {
-                  fontSize: 10,
-                  color: "#A9A9A9",
-                  marginLeft: 5
-              },
-              label: <strong>MIN</strong>
-          }
+        const tempValue = this.props.maxFilterValue; // So we can dinamically use the max filter value
+
+        var marks = {
+            0: {
+                style: {
+                    fontSize: 10,
+                    color: "#A9A9A9",
+                    marginLeft: 5
+                },
+                label: <strong>MIN</strong>
+            }
         };
-    const tempValue = this.props.maxFilterValue; // So we can dinamically use the max filter value
-    marks[tempValue] =  {
-        style: {
-          fontSize: 10,
-          color: "#A9A9A9",
-          marginLeft: -6
-        },
-        label: <strong>MAX</strong>,
-      }
+            
+        marks[tempValue] =  { // Add the Max dynamically because it'll depend on the props parameter
+            style: {
+            fontSize: 10,
+            color: "#A9A9A9",
+            marginLeft: -6
+            },
+            label: <strong>MAX</strong>,
+        }
 
 
 
