@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import {scaleLinear, scaleThreshold} from 'd3-scale'
+import {scaleLinear, scaleThreshold, scaleLog} from 'd3-scale'
 import 'react-vis/dist/style.css';
 import {
   XYPlot,
@@ -47,7 +47,7 @@ const plotColor=scaleThreshold()
 
 const textScale  = scaleLinear()
 .domain([0,100,200])
-.range([16,1,16])
+.range([16,5,16])
 .clamp(true)
 
 
@@ -94,12 +94,27 @@ class ScatterPlot extends Component {
 
   getData(country){
     const hdi = country.properties.gapminder.hdi_2017[this.props.year] || null;
-    const debt = country.properties.gapminder.external_debt_total_us_not_inflation_adjusted[this.props.year] || null;
+    const debt = country.properties.gapminder.external_debt_total_us_not_inflation_adjusted[this.props.year] || 0;
     const debtToGDP= country.properties.gapminder.debt_by_gdp[this.props.year] || null
 
-    if(!debt) return null;
+
     return(
-      {x:hdi, y:debt/1000000000, size:plotScale(debtToGDP), color:plotColor(debtToGDP), label:country.properties.name, style: {fill:textColor(debtToGDP), fontSize: textScale(debtToGDP)}}
+      {
+        x:hdi,
+        y:debt/1000000000,
+        size:plotScale(debtToGDP),
+        color:plotColor(debtToGDP),
+        label:country.properties.name,
+
+        rotation:-45,
+        style: {
+          fill:textColor(debtToGDP),
+          fontFamily: "Roboto, sans-serif",
+          fontWeight: "600",
+          fontSize: textScale(debtToGDP),
+
+        }
+      }
     )
   }
 
@@ -120,9 +135,9 @@ console.log(this.props)
     }
 
 
-    const filteredData = data.filter(d => d.properties.gapminder.external_debt_total_us_not_inflation_adjusted[this.props.year] && d.properties.gapminder.debt_by_gdp[this.props.year] && d.properties.gapminder.hdi_2017[this.props.year])
-    const plotData = filteredData.map(c => this.getData(c))
-    const labelData = plotData.filter(d => d.size>90 || d.y>250)
+    const filteredData = data.filter(d => d.properties.gapminder.debt_by_gdp[this.props.year] && d.properties.gapminder.hdi_2017[this.props.year])
+    const plotData = filteredData.map(c => this.getData(c)).sort((a,b)=>a.size-b.size)
+    const labelData = plotData.filter(a => a.y <= lastDrawLocation.top && a.y>=lastDrawLocation.bottom && a.x>=lastDrawLocation.left && a.x<=lastDrawLocation.right ).sort((a,b)=>b.size-a.size).slice(0,7)
 		return (
       <div
         data-tip>
@@ -130,8 +145,10 @@ console.log(this.props)
 					width={window.innerWidth - 80}
 					height={window.innerHeight - 160}
 					style={{marginLeft: '40px', marginTop: '40px', marginRight: '40px'}}
-          animation
-          xDomain={[0,1]}
+
+
+
+
           xDomain={
               lastDrawLocation && [
                 lastDrawLocation.left,
@@ -165,6 +182,7 @@ console.log(this.props)
               labelAnchorY="middle"
               labelAnchorX="middle"
               strokeWidth="2"
+              style={{}}
               animation
               allowOffsetToBeReversed
               data={labelData}/>
