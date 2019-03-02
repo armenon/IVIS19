@@ -46,13 +46,13 @@
 		color: $color-white; 
 		border-radius: $border-radius; 
 		bottom: 30px;
-		left: -4.05%;
 		box-shadow: $box-shadow;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		font-weight: bold;
 		font-size: 22px;
+		margin-left: -42.5px;
 	}
 	output:after { 
 		content: "";
