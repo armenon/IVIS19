@@ -93,9 +93,7 @@ class SideBar extends Component {
 						<FilterOption filterName="HPI" filterLeftValue="0" filterRightValue="1"
 							minFilterValue={0} maxFilterValue={1} defaultValueMin={0.4} /*afterChangeFunction=randomFunction(value)*/
 							defaultValueMax={0.7} step={0.01}></FilterOption>
-						<FilterOption filterName="Population" filterLeftValue="0" filterRightValue="1400M"
-							minFilterValue={0} maxFilterValue={1400} defaultValueMin={700} /*afterChangeFunction=randomFunction(value)*/
-							defaultValueMax={900} step={10}></FilterOption>
+						
 					</div>
 				</div>
 				<TimeBar onYearChange={this.handleYearChange} year={year} isFull={!isShown || isGraphShown} />
@@ -131,3 +129,8 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideBar);
+
+
+/*<FilterOption filterName="Population" filterLeftValue="0" filterRightValue="1400M"
+							minFilterValue={0} maxFilterValue={1400} defaultValueMin={700} /*afterChangeFunction=randomFunction(value)*/
+							/*defaultValueMax={900} step={10}></FilterOption>*/
