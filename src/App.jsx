@@ -21,7 +21,7 @@ class App extends Component {
 		return (
 			<>
 				<Button onClick={() => this.setState({ graph: !this.state.graph })} id="filterButton" bsPrefix="btn btn-primary box-shadow graph">{!this.state.graph ? 'Show graph' : 'Show map'}</Button>
-				<SideBar />
+				<SideBar isGraphShown={this.state.graph}/>
 				{this.state.graph?<ScatterPlot/>:<WorldMap />}
 
 			</>

@@ -50,8 +50,10 @@ class SideBar extends Component {
 		return (
 			<div>
 				<Button onClick={() => this.toggleMenu()} id="filterButton" bsPrefix="btn btn-primary box-shadow">Filters <i className="fa fa-filter"></i></Button>
-				<div className={this.state.isShown ? 'side-bar' : 'side-bar hidden'}>
-					<a onClick={() => this.toggleMenu()}><i className="fas fa-arrow-left"></i> Hide filters</a>
+				<div className={this.state.isShown || this.props.isGraphShown ? 'side-bar' : 'side-bar hidden'}>
+					{!this.props.isGraphShown && (
+						<a onClick={() => this.toggleMenu()}><i className="fas fa-arrow-left"></i> Hide filters</a>
+					)}
 					<div className="spacing"></div>
 					<div className="logo d-flex">
 						<i className="fas fa-dollar-sign"></i>
