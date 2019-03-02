@@ -11,7 +11,7 @@ class TimeBar extends Component {
 				<span className="label large color-dark">1990</span>
 				<div className="spacing-h"></div>
 				<div className="input-holder">
-					<input onChange={this.props.onYearChange} type="range" name="year" className="form-control-range" min="1990" max="2017" />
+					<input onChange={this.props.onYearChange} type="range" name="year" className="form-control-range" min="1990" max="2015" />
 					<output for="year" onforminput="value = year.valueAsNumber;">{this.props.year}</output>
 				</div>
 				<div className="spacing-h"></div>

@@ -32,7 +32,7 @@ const getCountryGapminderData = (gmData, properties) => {
 		if (data[value] == null) data[value] = {};
 		for (let row of gmData[value]) {
 			let countryName = row['country']
-			if (rawStr(countryName) == rawStr(properties.name)) {
+			if (rawStr(countryName) == rawStr(properties.name) || rawStr(countryName) == rawStr(properties.name_long)) {
 				delete row['country'];
 				data[value] = row;
 			}

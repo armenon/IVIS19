@@ -242,9 +242,9 @@ class WorldMap extends Component {
 										}
 									</Geographies>
 									<Markers>
-										{ data.filter(d => d.properties.gapminder.external_debt_total_us_not_inflation_adjusted[this.props.year]).map((country,i)=> {
+										{ data.filter(d => d.properties.gapminder.debt_by_gdp[this.props.year]).map((country,i)=> {
 
-											const debtToGDP = Math.round(country.properties.gapminder.debt_to_foreigners_by_public_and_private_percent_of_gni[this.props.year])
+											const debtToGDP = Math.round(country.properties.gapminder.debt_by_gdp[this.props.year])
 											return(
 												<Marker key={i}  marker={{coordinates:this.getCenter(country.geometry)}}>
 												<circle

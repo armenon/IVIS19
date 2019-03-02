@@ -95,7 +95,7 @@ class ScatterPlot extends Component {
   getData(country){
     const hdi = country.properties.gapminder.hdi_human_development_index[this.props.year] || null;
     const debt = country.properties.gapminder.external_debt_total_us_not_inflation_adjusted[this.props.year] || null;
-    const debtToGDP= country.properties.gapminder.debt_to_foreigners_by_public_and_private_percent_of_gni[this.props.year] || null
+    const debtToGDP= country.properties.gapminder.debt_by_gdp[this.props.year] || null
 
     if(!debt) return null;
     return(
@@ -120,7 +120,7 @@ console.log(this.props)
     }
 
 
-    const filteredData = data.filter(d => d.properties.gapminder.external_debt_total_us_not_inflation_adjusted[this.props.year] && d.properties.gapminder.debt_to_foreigners_by_public_and_private_percent_of_gni[this.props.year] && d.properties.gapminder.hdi_human_development_index[this.props.year])
+    const filteredData = data.filter(d => d.properties.gapminder.external_debt_total_us_not_inflation_adjusted[this.props.year] && d.properties.gapminder.debt_by_gdp[this.props.year] && d.properties.gapminder.hdi_human_development_index[this.props.year])
     const plotData = filteredData.map(c => this.getData(c))
     const labelData = plotData.filter(d => d.size>90 || d.y>250)
 		return (
