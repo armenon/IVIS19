@@ -3,6 +3,16 @@ import * as topojson from 'topojson-client'
 
 const base = '@@app/general';
 
+export const SHOW_SIDEBAR = pfx(base, 'SHOW_SIDEBAR');
+export const showSidebar = () => {
+	return { type: SHOW_SIDEBAR }
+}
+
+export const HIDE_SIDEBAR = pfx(base, 'HIDE_SIDEBAR');
+export const hideSidebar = () => {
+	return { type: HIDE_SIDEBAR }
+}
+
 export const TOGGLE_VISUALIZATION = pfx(base, 'TOGGLE_VISUALIZATION');
 export const toggleVisualization = () => {
 	return { type:  TOGGLE_VISUALIZATION }

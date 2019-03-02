@@ -1,6 +1,10 @@
 import * as Actions from './actions';
+import { countryNames } from '../../utils/countries';
 
 const filtersState = {
+	filterResults: [],
+	countries: [ ...countryNames ],
+	countriesSearchResults: [ ...countryNames ],
 	selectedCountries: [],
 	debt: {
 		min: null,
@@ -49,7 +53,18 @@ export const filters = (state = filtersState, action) => {
 				year: action.year
 			}
 		}
+		case Actions.SEARCH_COUNTRIES: {
+			return {
+				...state,
+				countriesSearchResults: action.str ? filterCountries(action.str, state.countries) : [ ...state.countries ]
+			}
+		}
 		default:
 			return state;
 	}
+}
+
+const filterCountries = (str, countries) => {
+	str = str.toLowerCase();
+	return countries.filter(country => country['name'].toLowerCase().startsWith(str));
 }

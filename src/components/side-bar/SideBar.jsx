@@ -1,73 +1,46 @@
 import React, { Component } from 'react';
-import { Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import FilterOption from '../filter-options/FilterOptions'
-import {connect} from 'react-redux'
-import { countryNames } from '../../utils/countries.js'
+import { connect } from 'react-redux'
 import TimeBar from '../time-bar/TimeBar';
 import VariablesLegend from '../variables-legend/VariablesLegend';
-import { fetchCountries, setYear, enableOptimization, disableOptimization, setSelectedCountries } from '../../store/'
+import { setYear, enableOptimization, disableOptimization, showSidebar, hideSidebar, searchCountries } from '../../store/'
 import './SideBar.scss';
 
 
 class SideBar extends Component {
-	constructor() {
-		super();
-		this.state = {
-			isShown: true,
-			availableCountries: countryNames,
-		}
-		this.handleFilter = this.handleFilter.bind(this)
-	}
-	searchCountries(event) {
-		var searchString = event ? event.target.value : '';
-		if (searchString) {
-			this.setState({availableCountries: this.filterCountries(searchString)});
-		} else {
-			this.setState({ availableCountries: countryNames });
-		}
+	handleSearch = (event) => {
+		const str = event ? event.target.value : '';
+		this.props.search(str);
 	}
 
-	handleFilter(value, type){
-		console.log(value)
-		if (type == 'pop') {
-
-		}
-		if (type == 'debt') {
-
-			this.props.setSelectedCountries(this.props.data.filter(c => c.properties.gapminder.debt_by_gdp[this.props.year]>=value[0] && c.properties.gapminder.debt_by_gdp[this.props.year] <= value[1]))
-		}
-		if (type == 'hdi') {
-
-			this.props.setSelectedCountries(this.props.data.filter(c => c.properties.gapminder.hdi_2017[this.props.year]>=value[0] && c.properties.gapminder.hdi_2017[this.props.year] <= value[1]))
-		}
+	handleYearChange = (event) => {
+		const year = event.target.value;
+		this.props.setYear(year);
 	}
 
-	filterCountries(string) {
-		return countryNames.filter(country =>
-			country['name'].toLowerCase().startsWith(string.toLowerCase())
-		);
-	}
 	toggleMenu() {
-		this.setState({
-			isShown: !this.state.isShown,
-		});
+		this.props.isShown ? this.props.hide() : this.props.show();
 	}
-	renderCountries() {
-		return this.state.availableCountries.map((country,i) => (
-			<div key={i} className="checkbox active">
+
+	renderCountries(results) {
+		return results && results.map(country => (
+			<div className="checkbox active" key={country.id} >
 				<label className="d-flex align-items-center">
-					<input value={country.id} key={country.id} type="checkbox" name="" id="" checked/>
+					<input value={country.id} type="checkbox" name="" id="" checked />
 					<div className="spacing-h x-small"></div>
 					{country.name}
 				</label>
 			</div>
 		));
 	}
+
 	render() {
+		const { isGraphShown, isShown, year, results } = this.props;
 		return (
 			<div>
-				{!this.props.isGraphShown && (<Button onClick={() => this.toggleMenu()} id="filterButton" bsPrefix="btn btn-primary box-shadow">Filters <i className="fa fa-filter"></i></Button>)}
-				<div className={this.state.isShown && !this.props.isGraphShown ? 'side-bar' : 'side-bar hidden'}>
+				{!isGraphShown && (<Button onClick={() => this.toggleMenu()} id="filterButton" bsPrefix="btn btn-primary box-shadow">Filters <i className="fa fa-filter"></i></Button>)}
+				<div className={isShown && !isGraphShown ? 'side-bar' : 'side-bar hidden'}>
 					<a onClick={() => this.toggleMenu()}><i className="fas fa-arrow-left"></i> Hide filters</a>
 					<div className="spacing small"></div>
 					<div className="logo d-flex">
@@ -82,15 +55,15 @@ class SideBar extends Component {
 					<div className="country-search">
 						<span className="search-holder">
 							<i className="fa fa-search"></i>
-							<input type="text" onChange={(e) => this.searchCountries(e)} placeholder="Search countries"/>
+							<input type="text" onChange={this.handleSearch} placeholder="Search countries" />
 						</span>
 						<div className="countries">
-							{this.renderCountries()}
+							{this.renderCountries(results)}
 						</div>
 						<div className="select-all">
 							<div className="checkbox active">
 								<label className="d-flex align-items-center">
-									<input type="checkbox" name="" id="" checked/>
+									<input type="checkbox" name="" id="" checked />
 									<div className="spacing-h x-small"></div>
 									Select all
 								</label>
@@ -100,39 +73,42 @@ class SideBar extends Component {
 					<div className="spacing intermediate"></div>
 					<p className="label">Filters</p>
 					<div className="filters">
-						<FilterOption filterName="Debt" filterLeftValue="USD 0" filterRightValue="USD 2000B"
-							minFilterValue={0} maxFilterValue = {2000} defaultValueMin = {0} afterChangeFunction={(value)=>this.handleFilter(value, 'debt')}
-							defaultValueMax = {2000} step={100}></FilterOption>
-						<FilterOption filterName="HDI" filterLeftValue="0" filterRightValue="1"
-							minFilterValue={0} maxFilterValue = {1} defaultValueMin = {0} afterChangeFunction={(value)=>this.handleFilter(value, 'hdi')}
-							defaultValueMax = {1} step={0.01}></FilterOption>
-
+						<FilterOption filterName="Debt" filterLeftValue="USD 0" filterRightValue="USD 20B"
+							minFilterValue={0} maxFilterValue={20} defaultValueMin={4} /*afterChangeFunction=randomFunction(value) <<<---- Send a function that can accept the value. It returns a [X,Y]*/
+							defaultValueMax={7} step={1}></FilterOption>
+						<FilterOption filterName="HPI" filterLeftValue="0" filterRightValue="1"
+							minFilterValue={0} maxFilterValue={1} defaultValueMin={0.4} /*afterChangeFunction=randomFunction(value)*/
+							defaultValueMax={0.7} step={0.01}></FilterOption>
+						<FilterOption filterName="Population" filterLeftValue="0" filterRightValue="1400M"
+							minFilterValue={0} maxFilterValue={1400} defaultValueMin={700} /*afterChangeFunction=randomFunction(value)*/
+							defaultValueMax={900} step={10}></FilterOption>
 					</div>
 				</div>
-				<TimeBar onYearChange={(e)=>this.props.setYear(e.target.value)} year={this.props.year} isFull={!this.state.isShown || this.props.isGraphShown} />
-				<VariablesLegend isFull={!this.state.isShown || this.props.isGraphShown} />
+				<TimeBar onYearChange={this.handleYearChange} year={year} isFull={!isShown || isGraphShown} />
+				<VariablesLegend isFull={!isShown || isGraphShown} />
 			</div>
 		);
 	}
 }
 
 const mapStateToProps = state => ({
-
-	year: state.filters.year,
-	selectedCountries: state.filters.selectedCountries,
-	data: state.general.data
+	isShown: state.general.showSidebar,
+	countries: state.filters.countries,
+	results: state.filters.countriesSearchResults,
+	year: state.filters.year
 });
 
 
- const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
 	return {
-
+		show: () => dispatch(showSidebar()),
+		hide: () => dispatch(hideSidebar()),
 		setYear: async (year) => {
 			dispatch(disableOptimization(year))
 			await dispatch(setYear(year))
 			dispatch(enableOptimization(year))
 		},
-		setSelectedCountries: (countries) => dispatch(setSelectedCountries(countries))
+		search: (str) => dispatch(searchCountries(str))
 	}
 }
 
