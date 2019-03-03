@@ -11,6 +11,12 @@
 	top: 40px;
 	z-index: 5;
 }
+
+.variables-image {
+	box-shadow: $box-shadow;
+	min-width: 200px;
+}
+
 .variables {
 	min-width: 320px;
 	justify-content: space-between;

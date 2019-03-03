@@ -102,10 +102,10 @@ class SideBar extends Component {
 					<p className="label">Filters</p>
 					<div className="filters">
 						<FilterOption beforeVal="USD " afterVal="B" filterName="Debt" filterLeftValue="USD 0B" filterRightValue="USD 20 000B"
-							minFilterValue={0} maxFilterValue={20000} defaultValueMin={debt.min} /*afterChangeFunction=randomFunction(value) <<<---- Send a function that can accept the value. It returns a [X,Y]*/
+							minFilterValue={0} maxFilterValue={20000} defaultValueMin={debt.min} 
 							defaultValueMax={debt.max} step={10} afterChangeFunction={this.handleDebtChange}></FilterOption>
 						<FilterOption beforeVal="" afterVal="" filterName="HDI" filterLeftValue="0" filterRightValue="1"
-							minFilterValue={0} maxFilterValue={1} defaultValueMin={hdi.min} /*afterChangeFunction=randomFunction(value)*/
+							minFilterValue={0} maxFilterValue={1} defaultValueMin={hdi.min} 
 							defaultValueMax={hdi.max} step={0.01} afterChangeFunction={this.handleHdiChange}></FilterOption>
 
 					</div>

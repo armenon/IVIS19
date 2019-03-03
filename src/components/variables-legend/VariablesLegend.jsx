@@ -15,7 +15,17 @@ class VariablesLegend extends Component {
 	render() {
 		return (
 			<div className="variables-container">
-				<div className={this.props.isFull ? 'variables box-shadow full' : 'variables box-shadow'}>
+				<img src="/img/legend.png" alt="Legend" className="variables-image"/>
+			</div>
+		);
+	}
+}
+
+
+export default VariablesLegend;
+
+
+/*<div className={this.props.isFull ? 'variables box-shadow full' : 'variables box-shadow'}>
 					<div className="d-flex align-items-center">
 						<span className="large">
 						Debt
@@ -33,11 +43,4 @@ class VariablesLegend extends Component {
 						GDP
 						</span>
 					</div>
-				</div>
-			</div>
-		);
-	}
-}
-
-
-export default VariablesLegend;
+				</div>*/
