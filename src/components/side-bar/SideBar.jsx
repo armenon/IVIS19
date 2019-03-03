@@ -101,12 +101,12 @@ class SideBar extends Component {
 					<div className="spacing intermediate"></div>
 					<p className="label">Filters</p>
 					<div className="filters">
-						<FilterOption filterName="Debt" filterLeftValue="USD 0" filterRightValue="USD 20B"
-							minFilterValue={0} maxFilterValue={20} defaultValueMin={debt.min} /*afterChangeFunction=randomFunction(value) <<<---- Send a function that can accept the value. It returns a [X,Y]*/
+						<FilterOption filterName="Debt" filterLeftValue="USD 0" filterRightValue="USD 2,000 B"
+							minFilterValue={0} maxFilterValue={2000} defaultValueMin={debt.min} /*afterChangeFunction=randomFunction(value) <<<---- Send a function that can accept the value. It returns a [X,Y]*/
 							defaultValueMax={debt.max} step={1} afterChangeFunction={this.handleDebtChange}></FilterOption>
-						<FilterOption filterName="HPI" filterLeftValue="0" filterRightValue="1"
+						<FilterOption filterName="HDI" filterLeftValue="0" filterRightValue="1"
 							minFilterValue={0} maxFilterValue={1} defaultValueMin={hdi.min} /*afterChangeFunction=randomFunction(value)*/
-							defaultValueMax={hdi.max} step={0.01} afterChangeFunction={this.handleDebtChange}></FilterOption>
+							defaultValueMax={hdi.max} step={0.01} afterChangeFunction={this.handleHdiChange}></FilterOption>
 
 					</div>
 				</div>
@@ -137,12 +137,36 @@ const mapDispatchToProps = dispatch => {
 			dispatch(enableOptimization(year))
 		},
 		search: str => dispatch(searchCountries(str)),
-		selectCountry: country => dispatch(selectCountry(country)),
-		unselectCountry: country => dispatch(unselectCountry(country)),
-		selectAll: () => dispatch(selectAll()),
-		unselectAll: () => dispatch(unselectAll()),
-		setDebt: (debt) => dispatch(setDebtRange(debt)),
-		setHdi: (hdi) => dispatch(setHdiRange(hdi))
+		selectCountry: async (country) => {
+			dispatch(disableOptimization())
+			await dispatch(selectCountry(country))
+			dispatch(enableOptimization())
+		},
+		unselectCountry: async (country) => {
+			dispatch(disableOptimization())
+			await dispatch(unselectCountry(country))
+			dispatch(enableOptimization())
+		},
+		selectAll: async () => {
+			dispatch(disableOptimization())
+			await dispatch(selectAll())
+			dispatch(enableOptimization())
+		},
+		unselectAll: async () => {
+			dispatch(disableOptimization())
+			await dispatch(unselectAll())
+			dispatch(enableOptimization())
+		},
+		setDebt: async (debt) => {
+			dispatch(disableOptimization())
+			await dispatch(setDebtRange(debt))
+			dispatch(enableOptimization())
+		},
+		setHdi: async (hdi) => {
+			dispatch(disableOptimization())
+			await dispatch(setHdiRange(hdi))
+			dispatch(enableOptimization())
+		},
 	}
 }
 
