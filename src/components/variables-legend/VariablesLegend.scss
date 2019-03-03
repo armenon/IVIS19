@@ -24,6 +24,9 @@
 	&.full {
 		margin-left: 0px;
 	}
+	&.graph {
+		max-width: 350px;
+	}
 }
 
 .variables {

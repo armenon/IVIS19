@@ -111,7 +111,7 @@ class SideBar extends Component {
 					</div>
 				</div>
 				<TimeBar onYearChange={this.handleYearChange} year={year} isFull={!isShown && !isGraphShown} />
-				<VariablesLegend isFull={!isShown && !isGraphShown} />
+				<VariablesLegend isFull={!isShown && !isGraphShown} graphVisible={isGraphShown} />
 			</div>
 		);
 	}
