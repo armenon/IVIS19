@@ -267,7 +267,7 @@ class WorldMap extends Component {
 														cacheId={`${iso_n3}-${i}`}
 														data-html={true}
 														data-tip={this.renderTooltip(geography)}
-
+														className="geography"
 														geography={geography}
 														projection={projection}
 														onClick={this.handleClick}
@@ -293,6 +293,7 @@ class WorldMap extends Component {
 													stroke={fillProperties(country.properties.gapminder.hdi_2017[this.props.year])}
 													strokeWidth="2"
 													onClick={()=>console.log(country)}
+													className="marker"
 												/>
 												<text
 												textAnchor="middle"

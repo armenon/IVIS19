@@ -17,7 +17,7 @@ const filtersState = {
 		min: 0,
 		max: 1
 	},
-	year: 1990
+	year: 2015
 }
 
 export const filters = (state = filtersState, action) => {
