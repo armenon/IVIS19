@@ -195,7 +195,7 @@ class WorldMap extends Component {
 		return (
 			{
 				default: {
-					fill: fillProperties(geography.properties.gapminder.hdi_2017[this.props.year]),
+					fill: selectedCountries.some(country => country.id == iso_n3) ? fillProperties(geography.properties.gapminder.hdi_2017[this.props.year]) : '#ECEFF1',
 					stroke: "#607D8B",
 					strokeWidth: 0.75,
 					outline: "none"

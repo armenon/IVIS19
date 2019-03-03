@@ -132,17 +132,17 @@ const mapDispatchToProps = dispatch => {
 		show: () => dispatch(showSidebar()),
 		hide: () => dispatch(hideSidebar()),
 		setYear: async year => {
-			dispatch(disableOptimization(year))
+			dispatch(disableOptimization())
 			await dispatch(setYear(year))
-			dispatch(enableOptimization(year))
+			dispatch(enableOptimization())
 		},
 		search: str => dispatch(searchCountries(str)),
-		selectCountry: async (country) => {
+		selectCountry: async country => {
 			dispatch(disableOptimization())
 			await dispatch(selectCountry(country))
 			dispatch(enableOptimization())
 		},
-		unselectCountry: async (country) => {
+		unselectCountry: async country => {
 			dispatch(disableOptimization())
 			await dispatch(unselectCountry(country))
 			dispatch(enableOptimization())
@@ -166,7 +166,7 @@ const mapDispatchToProps = dispatch => {
 			dispatch(disableOptimization())
 			await dispatch(setHdiRange(hdi))
 			dispatch(enableOptimization())
-		},
+		}
 	}
 }
 
