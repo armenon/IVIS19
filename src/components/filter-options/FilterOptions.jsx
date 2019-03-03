@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import { renderToString } from 'react-dom/server';
-import { connect } from 'react-redux';
-
 import Slider from 'rc-slider';
-import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
 
 import './FilterOptions.scss';
@@ -41,8 +37,6 @@ class FilterOption extends Component {
             label: <strong>MAX</strong>,
         }
 
-
-
         return (
         <div className = "filter-container">
             <h3 className = "filter-title">{this.props.filterName}</h3>
@@ -62,8 +56,8 @@ class FilterOption extends Component {
                             marginTop: -8,
                             backgroundColor: '#ffffff',
                         }}
-                        activeDotStyle={{ borderColor: "#FFFFFF" }}
-                        onAfterChange= {(value) => this.props.afterChangeFunction(value)} //TO-DO: Call proper function from here
+												activeDotStyle={{ borderColor: "#FFFFFF" }}
+												onChange= {(value) => this.props.afterChangeFunction(value)} //TO-DO: Call proper function from here
                         defaultValue={[this.props.defaultValueMin, this.props.defaultValueMax]} tipFormatter={value => `${value}`}/>
                 </div>
             </div>
