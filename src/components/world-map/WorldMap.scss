@@ -28,10 +28,14 @@
 	width: 100px;
 }
 
+.geography, .marker {
+	user-select: none;
+}
+
 .zoom-controls {
 	position: absolute;
 	right: 40px;
-	bottom: 120px;
+	bottom: 140px;
 }
 
 .zoom-control {

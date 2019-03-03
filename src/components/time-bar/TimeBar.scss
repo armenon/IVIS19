@@ -32,6 +32,9 @@
 			width: 20px;
 			background-color: $color-black;
 			border-radius: 50%;
+			&:hover {
+				cursor: pointer;
+			}
 		}
 		&:focus {
 			outline: none;

@@ -68,7 +68,7 @@ class SideBar extends Component {
 		return (
 			<div>
 				<Button onClick={() => this.toggleMenu()} id="filterButton" bsPrefix="btn btn-primary box-shadow">Filters <i className="fa fa-filter"></i></Button>
-				<div className={isShown ? 'side-bar' : 'side-bar hidden'}>
+				<div className={isShown || isGraphShown ? 'side-bar' : 'side-bar hidden'}>
 					{!isGraphShown && (<a onClick={() => this.toggleMenu()}><i className="fas fa-arrow-left"></i> Hide filters</a>)}
 					<div className="spacing small"></div>
 					<div className="logo d-flex">
@@ -110,8 +110,8 @@ class SideBar extends Component {
 
 					</div>
 				</div>
-				<TimeBar onYearChange={this.handleYearChange} year={year} isFull={!isShown} />
-				<VariablesLegend isFull={!isShown} />
+				<TimeBar onYearChange={this.handleYearChange} year={year} isFull={!isShown && !isGraphShown} />
+				<VariablesLegend isFull={!isShown && !isGraphShown} />
 			</div>
 		);
 	}
