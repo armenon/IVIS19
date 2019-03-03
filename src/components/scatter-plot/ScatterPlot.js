@@ -142,9 +142,9 @@ console.log(this.props)
       <div
         data-tip>
        <XYPlot
-					width={window.innerWidth - 80}
-					height={window.innerHeight - 160}
-					style={{marginLeft: '40px', marginTop: '40px', marginRight: '40px'}}
+					width={window.innerWidth - 460}
+					height={window.innerHeight - 120}
+					style={{marginLeft: '420px', marginTop: '40px', marginRight: '40px'}}
 
 
 
