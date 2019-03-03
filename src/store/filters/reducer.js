@@ -17,7 +17,8 @@ const filtersState = {
 		min: 0,
 		max: 1
 	},
-	year: 2015
+	year: 2015,
+	referenceHdi: null
 }
 
 export const filters = (state = filtersState, action) => {
@@ -74,6 +75,12 @@ export const filters = (state = filtersState, action) => {
 			return {
 				...state,
 				selectedCountries: [],
+			}
+		}
+		case Actions.SET_REFERENCE_HDI: {
+			return {
+				...state,
+				referenceHdi: action.referenceHdi
 			}
 		}
 		default:
