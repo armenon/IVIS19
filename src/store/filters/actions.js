@@ -11,6 +11,7 @@ export const SELECT_COUNTRY = pfx(base, 'SELECT_COUNTRY');
 export const UNSELECT_COUNTRY = pfx(base, 'UNSELECT_COUNTRY');
 export const SELECT_ALL = pfx(base, 'SELECT_ALL');
 export const UNSELECT_ALL = pfx(base, 'UNSELECT_ALL');
+export const SET_REFERENCE_HDI = pfx(base, 'SET_REFERENCE_HDI');
 
 export const setDebtRange = debtRange => {
 	return async dispatch => dispatch({ type: SET_DEBT_RANGE, debtRange });
@@ -46,4 +47,8 @@ export const selectAll = () => {
 
 export const unselectAll = () => {
 	return async dispatch => dispatch({ type: UNSELECT_ALL })
+}
+
+export const setReferenceHdi = (referenceHdi) => {
+	return async dispatch => dispatch({ type: SET_REFERENCE_HDI, referenceHdi })
 }
