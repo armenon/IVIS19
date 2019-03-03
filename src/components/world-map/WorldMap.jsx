@@ -23,7 +23,8 @@ import {
 	setCenter,
 	setCurrentCountry,
 	setSelectedCountry,
-	setZoom
+	setZoom,
+	setReferenceHdi
 } from '../../store';
 
 import {
@@ -98,15 +99,16 @@ class WorldMap extends Component {
 	handleClick = async (geography, evt) => {
 		console.log(geography)
 		console.log('should ignore?', this.ignoreClick)
-		if (this.ignoreClick) return;
+		// if (this.ignoreClick) return;
 
 		const { iso_n3, name, gapminder } = geography.properties;
 
-		await this.props.setSelectedCountry({ iso_n3, name, gapminder })
+		// await this.props.setSelectedCountry({ iso_n3, name, gapminder })
 
 		const path = geoPath().projection(this.projection())
 		const centroid = this.projection().invert(path.centroid(geography))
 
+		this.props.setReferenceHdi(gapminder.hdi_2017[this.props.year]);
 		this.props.setCenter(centroid);
 		this.props.setZoom(3);
 	}
@@ -382,7 +384,12 @@ const mapDispatchToProps = dispatch => {
 			// re-enable optimization on the map after we are sure side effects have taken place
 			dispatch(enableOptimization());
 		},
-		setZoom: zoom => dispatch(setZoom(zoom))
+		setZoom: zoom => dispatch(setZoom(zoom)),
+		setReferenceHdi: async hdi => {
+			dispatch(disableOptimization());
+			dispatch(setReferenceHdi(hdi));
+			dispatch(enableOptimization());
+		}
 	}
 }
 
