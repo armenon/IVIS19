@@ -134,13 +134,34 @@ class WorldMap extends Component {
 
 
 	renderTooltip = (geography) => {
+		const { year } = this.props;
+		const geoDebt = geography.properties.gapminder.external_debt_total_us_not_inflation_adjusted[year]
+		const geoDebtByGdp = geography.properties.gapminder.debt_by_gdp[year]
+		const geoHdi = geography.properties.gapminder.hdi_2017[year]
+		const geoPop = geography.properties.gapminder.population_total[year]
 
 		console.log('tooltip rendered')
 		const { name } = geography.properties
 
 		return renderToString(
-			<div>
+			<div className="map-tooltip">
 				<h3>{name}</h3>
+				<div className="tooltip-items">
+					<div>HDI</div>
+					<div>{geoHdi || ''}</div>
+				</div>
+				<div className="tooltip-items">
+					<div>Debt (USD)</div>
+					<div>{geoDebt ? `$${geoDebt.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : '-'}</div>
+				</div>
+				<div className="tooltip-items">
+					<div>Debt by GDP</div>
+					<div>{geoDebtByGdp ? `${geoDebtByGdp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}%` : '-'}</div>
+				</div>
+				<div className="tooltip-items">
+					<div>Population</div>
+					<div>{geoPop ? geoPop.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '-'}</div>
+				</div>
 			</div>
 		)
 	}
@@ -152,7 +173,7 @@ class WorldMap extends Component {
 		const geodebt = geography.properties.gapminder.external_debt_total_us_not_inflation_adjusted[year]/1000000000
 		const geohdi = geography.properties.gapminder.hdi_2017[year]
 
-		
+
 		if(selectedCountries.findIndex(i=> i.id==parseInt(iso_n3) || i.name==formal_en || i.name==name|| i.name==name_long) === -1 ||
 			geodebt<debt.min || geodebt>debt.max ||
 			geohdi<hdi.min || geohdi>hdi.max

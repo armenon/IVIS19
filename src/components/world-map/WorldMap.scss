@@ -64,22 +64,28 @@
 	}
 }
 
-.tooltip {
-	max-width: 150px;
-	padding: 0 0 20px;
+.map-tooltip {
+	display: flex;
+	flex-direction: column;
+	min-width: 200px;
+	padding: 0 0 10px;
 }
 
-.tooltip-answers {
+.tooltip-items {
 	display: flex;
 	justify-content: space-between;
 	font-size: 12px;
 	border-bottom: 1px solid #eee;
 	padding-bottom: 1px;
 	margin-bottom: 2px;
-}
+	> * {
+		padding: 2px;
+		flex: 1;
 
-.tooltip-item {
-	padding: 2px;
+		&:last-child {
+			text-align: right;
+		}
+	}
 }
 
 // override react-tooltip default styles
