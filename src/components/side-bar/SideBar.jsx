@@ -76,7 +76,7 @@ class SideBar extends Component {
 						<div className="spacing-h small"></div>
 						<span>
 							<h1>World debt</h1>
-							<p>Visualizing debt in the world</p>
+							<p>Relation of debt and happiness</p>
 						</span>
 					</div>
 					<div className="spacing intermediate"></div>
