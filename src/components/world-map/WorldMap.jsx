@@ -49,11 +49,11 @@ const markerColor  = (range) => scaleThreshold()
 
 const markerScale  = scaleLinear()
   .domain([0,100,200])
-  .range([25,1,25])
+  .range([25,5,25])
 
 const textScale  = scaleLinear()
 .domain([0,100,200])
-.range([15,1,15])
+.range([15,5,15])
 
 
 
@@ -135,12 +135,13 @@ class WorldMap extends Component {
 
 	renderTooltip = (geography) => {
 
-		console.log('tooltip rendered')
-		const { name } = geography.properties
+
+		const { name} = geography.properties
 
 		return renderToString(
 			<div>
 				<h3>{name}</h3>
+				<p>Debt/GDP: {geography.properties.gapminder.debt_by_gdp[this.props.year]}</p>
 			</div>
 		)
 	}
@@ -149,10 +150,10 @@ class WorldMap extends Component {
 
 		const {name, formal_en, name_long, iso_n3 } = geography.properties;
 		const { selectedCountries, year, debt, hdi } = this.props;
-		const geodebt = geography.properties.gapminder.external_debt_total_us_not_inflation_adjusted[year]/1000000000
+		const geodebt = geography.properties.gapminder.debt_by_gdp[year]/100*geography.properties.gapminder.total_gdp_us_inflation_adjusted[year]/1000000000
 		const geohdi = geography.properties.gapminder.hdi_2017[year]
 
-		
+
 		if(selectedCountries.findIndex(i=> i.id==parseInt(iso_n3) || i.name==formal_en || i.name==name|| i.name==name_long) === -1 ||
 			geodebt<debt.min || geodebt>debt.max ||
 			geohdi<hdi.min || geohdi>hdi.max
@@ -176,7 +177,7 @@ class WorldMap extends Component {
 		const { selectedCountry, selectedCountries, year, debt, hdi } = this.props;
 		//((selectedCountry && selectedCountry.iso_n3 === iso_n3)) ?
 	//		'#f50057' : '#cfd8dc',
-		const geodebt = geography.properties.gapminder.external_debt_total_us_not_inflation_adjusted[year]/1000000000
+		const geodebt = geography.properties.gapminder.central_debt_total[year]
 		const geohdi = geography.properties.gapminder.hdi_2017[year]
 
 
@@ -283,12 +284,14 @@ class WorldMap extends Component {
 
 											const debtToGDP = Math.round(country.properties.gapminder.debt_by_gdp[this.props.year])
 											return(
-												<Marker key={i}  marker={{coordinates:this.getCenter(country.geometry)}}>
+												<Marker key={i} 	  marker={{coordinates:this.getCenter(country.geometry)}}>
 												<circle
 													cx={0}
 													cy={0}
 													r={markerScale(debtToGDP)}
 													opacity={0.9}
+													data-html={true}
+														data-tip={this.renderTooltip(country)}
 													fill={markerColor(['#343434',"#ffffff", '#2a2a2a'])(debtToGDP)}
 													stroke={fillProperties(country.properties.gapminder.hdi_2017[this.props.year])}
 													strokeWidth="3"
@@ -297,6 +300,8 @@ class WorldMap extends Component {
 												/>
 												<text
 												textAnchor="middle"
+												data-html={true}
+													data-tip={this.renderTooltip(country)}
 												 y={'0.4em'}
 												 x={2}
 												style={{
