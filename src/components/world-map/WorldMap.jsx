@@ -152,13 +152,13 @@ class WorldMap extends Component {
 
 	getGeographyStyles = (geography) => {
 		const { iso_n3 } = geography.properties;
-		const { selectedCountry } = this.props;
+		const { selectedCountry, countries } = this.props;
 		//((selectedCountry && selectedCountry.iso_n3 === iso_n3)) ?
 	//		'#f50057' : '#cfd8dc',
 		return (
 			{
 				default: {
-					fill: fillProperties(geography.properties.gapminder.hdi_2017[this.props.year]),
+					fill: countries.some(country => country.id == iso_n3) ? fillProperties(geography.properties.gapminder.hdi_2017[this.props.year]) : '#ECEFF1',
 					stroke: "#607D8B",
 					strokeWidth: 0.75,
 					outline: "none"
@@ -297,7 +297,8 @@ const mapStateToProps = state => ({
 	error: state.general.error,
 	fetching: state.general.fetching,
 	data: state.general.data,
-	year: state.filters.year
+	year: state.filters.year,
+	countries: state.filters.selectedCountries
 });
 
 const mapDispatchToProps = dispatch => {

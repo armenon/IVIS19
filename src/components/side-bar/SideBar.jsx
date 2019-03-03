@@ -132,17 +132,41 @@ const mapDispatchToProps = dispatch => {
 		show: () => dispatch(showSidebar()),
 		hide: () => dispatch(hideSidebar()),
 		setYear: async year => {
-			dispatch(disableOptimization(year))
+			dispatch(disableOptimization())
 			await dispatch(setYear(year))
-			dispatch(enableOptimization(year))
+			dispatch(enableOptimization())
 		},
 		search: str => dispatch(searchCountries(str)),
-		selectCountry: country => dispatch(selectCountry(country)),
-		unselectCountry: country => dispatch(unselectCountry(country)),
-		selectAll: () => dispatch(selectAll()),
-		unselectAll: () => dispatch(unselectAll()),
-		setDebt: (debt) => dispatch(setDebtRange(debt)),
-		setHdi: (hdi) => dispatch(setHdiRange(hdi))
+		selectCountry: async country => {
+			dispatch(disableOptimization())
+			await dispatch(selectCountry(country))
+			dispatch(enableOptimization())
+		},
+		unselectCountry: async country => {
+			dispatch(disableOptimization())
+			await dispatch(unselectCountry(country))
+			dispatch(enableOptimization())
+		},
+		selectAll: async () => {
+			dispatch(disableOptimization())
+			await dispatch(selectAll())
+			dispatch(enableOptimization())
+		},
+		unselectAll: async () => {
+			dispatch(disableOptimization())
+			await dispatch(unselectAll())
+			dispatch(enableOptimization())
+		},
+		setDebt: async (debt) => {
+			dispatch(disableOptimization())
+			await dispatch(setDebtRange(debt))
+			dispatch(enableOptimization())
+		},
+		setHdi: async (hdi) => {
+			dispatch(disableOptimization())
+			await dispatch(setHdiRange(hdi))
+			dispatch(enableOptimization())
+		}
 	}
 }
 

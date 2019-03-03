@@ -33,17 +33,17 @@ export const searchCountries = str => {
 }
 
 export const selectCountry = (country) => {
-	return { type: SELECT_COUNTRY, country }
+	return async dispatch => dispatch({ type: SELECT_COUNTRY, country })
 }
 
 export const unselectCountry = (country) => {
-	return { type: UNSELECT_COUNTRY, country }
+	return async dispatch => dispatch({ type: UNSELECT_COUNTRY, country })
 }
 
 export const selectAll = () => {
-	return { type: SELECT_ALL }
+	return async dispatch => dispatch({ type: SELECT_ALL })
 }
 
 export const unselectAll = () => {
-	return { type: UNSELECT_ALL }
+	return async dispatch => dispatch({ type: UNSELECT_ALL })
 }
