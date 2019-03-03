@@ -17,8 +17,13 @@
 	max-width: 550px;
 	height: auto;
 	position: relative;
-	margin-left: auto;
-  	margin-right: auto;
+	left: 0;
+	right: 0;
+	margin-left: 380px;
+	transition: 0.3s all cubic-bezier(1, 0, 0, 1);
+	&.full {
+		margin-left: 0px;
+	}
 }
 
 .variables {
@@ -28,7 +33,6 @@
 	padding: 20px 40px;
 	border-radius: $border-radius;
 	position: relative;
-	margin-left: 380px;
 	transition: 0.3s all cubic-bezier(1, 0, 0, 1);
 	&.full {
 		margin-left: 0px;
