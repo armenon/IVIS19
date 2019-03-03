@@ -78,7 +78,18 @@ class ScatterPlot extends Component {
   }
   componentDidUpdate(){
     ReactTooltip.rebuild()
+
   }
+  componentWillReceiveProps(newprops){
+    this.setState({lastDrawLocation:{
+      top:newprops.debt.max,
+      bottom:newprops.debt.min,
+      left:newprops.hdi.min,
+      right:newprops.hdi.max
+    }})
+  }
+
+
 
 
   filterTest = (geography) => {
@@ -138,7 +149,7 @@ class ScatterPlot extends Component {
   }
 
 	render() {
-console.log(this.props)
+    console.log(this.props)
     const { data, fetching, error} = this.props;
     const { lastDrawLocation } = this.state;
 
@@ -161,24 +172,24 @@ console.log(this.props)
       <div
         data-tip>
        <XYPlot
-					width={window.innerWidth - 80}
+					width={window.innerWidth - 400}
 					height={window.innerHeight - 160}
-					style={{marginLeft: '40px', marginTop: '40px', marginRight: '40px'}}
+					style={{marginLeft: '400px', marginTop: '40px', marginRight: '40px'}}
 
 
 
 
           xDomain={
-              lastDrawLocation && [
+              lastDrawLocation?[
                 lastDrawLocation.left,
                 lastDrawLocation.right
-              ]
+              ]:[this.props.hdi.min, this.props.hdi.max]
             }
           yDomain={
-            lastDrawLocation  && [
+            lastDrawLocation?[
               lastDrawLocation.bottom,
               lastDrawLocation.top
-            ]
+            ]:[this.props.debt.min, this.props.debt.max]
           }
 				>
         <VerticalGridLines />
