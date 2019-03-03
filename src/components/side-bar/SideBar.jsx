@@ -101,10 +101,10 @@ class SideBar extends Component {
 					<div className="spacing intermediate"></div>
 					<p className="label">Filters</p>
 					<div className="filters">
-						<FilterOption filterName="Debt" filterLeftValue="USD 0" filterRightValue="USD 20 000B"
+						<FilterOption beforeVal="USD " afterVal="B" filterName="Debt" filterLeftValue="USD 0B" filterRightValue="USD 20 000B"
 							minFilterValue={0} maxFilterValue={20000} defaultValueMin={debt.min} /*afterChangeFunction=randomFunction(value) <<<---- Send a function that can accept the value. It returns a [X,Y]*/
-							defaultValueMax={debt.max} step={1} afterChangeFunction={this.handleDebtChange}></FilterOption>
-						<FilterOption filterName="HDI" filterLeftValue="0" filterRightValue="1"
+							defaultValueMax={debt.max} step={10} afterChangeFunction={this.handleDebtChange}></FilterOption>
+						<FilterOption beforeVal="" afterVal="" filterName="HDI" filterLeftValue="0" filterRightValue="1"
 							minFilterValue={0} maxFilterValue={1} defaultValueMin={hdi.min} /*afterChangeFunction=randomFunction(value)*/
 							defaultValueMax={hdi.max} step={0.01} afterChangeFunction={this.handleHdiChange}></FilterOption>
 

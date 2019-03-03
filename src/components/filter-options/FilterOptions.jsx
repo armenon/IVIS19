@@ -58,7 +58,7 @@ class FilterOption extends Component {
                         }}
 												activeDotStyle={{ borderColor: "#FFFFFF" }}
 												onChange= {(value) => this.props.afterChangeFunction(value)} //TO-DO: Call proper function from here
-                        defaultValue={[this.props.defaultValueMin, this.props.defaultValueMax]} tipFormatter={value => `${value}`}/>
+									defaultValue={[this.props.defaultValueMin, this.props.defaultValueMax]} tipFormatter={value => this.props.beforeVal + `${value}` + this.props.afterVal}/>
                 </div>
             </div>
         </div>
