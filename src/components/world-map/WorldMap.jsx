@@ -135,7 +135,7 @@ class WorldMap extends Component {
 
 	renderTooltip = (geography) => {
 		const { year } = this.props;
-		const geoDebt = geography.properties.gapminder.external_debt_total_us_not_inflation_adjusted[year]
+		const geoDebt = Math.round(geography.properties.gapminder.debt_by_gdp[year]/100 * geography.properties.gapminder.total_gdp_us_inflation_adjusted[year])
 		const geoDebtByGdp = geography.properties.gapminder.debt_by_gdp[year]
 		const geoHdi = geography.properties.gapminder.hdi_2017[year]
 		const geoPop = geography.properties.gapminder.population_total[year]
