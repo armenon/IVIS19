@@ -144,6 +144,24 @@ class WorldMap extends Component {
 		)
 	}
 
+	filterTest = (geography) => {
+		const {name } = geography.properties;
+		const { selectedCountries, year, debt, hdi } = this.props;
+		const geodebt = geography.properties.gapminder.external_debt_total_us_not_inflation_adjusted[year]/1000000000
+		const geohdi = geography.properties.gapminder.hdi_2017[year]
+
+
+		if(selectedCountries.findIndex(i=> i.name==name) === -1 ||
+			geodebt<debt.min || geodebt>debt.max ||
+			geohdi<hdi.min || geohdi>hdi.max
+			){
+			return false
+		} else {
+			return true
+		}
+
+	}
+
 	projection = () => {
 		return geoTimes()
 			.translate([this.state.width / 2, this.state.height / 2])
@@ -151,14 +169,31 @@ class WorldMap extends Component {
 	}
 
 	getGeographyStyles = (geography) => {
-		const { iso_n3 } = geography.properties;
-		const { selectedCountry, countries } = this.props;
+		const { iso_n3, name } = geography.properties;
+
+		const { selectedCountry, selectedCountries, year, debt, hdi } = this.props;
 		//((selectedCountry && selectedCountry.iso_n3 === iso_n3)) ?
 	//		'#f50057' : '#cfd8dc',
+		const geodebt = geography.properties.gapminder.external_debt_total_us_not_inflation_adjusted[year]/1000000000
+		const geohdi = geography.properties.gapminder.hdi_2017[year]
+
+
+		if(!this.filterTest(geography)){
+			return ({
+				default: {
+					fill: "f2f2f2",
+					stroke: "#607D8B",
+					strokeWidth: 0.75,
+					outline: "none"
+				},
+			})
+		}
+
+
 		return (
 			{
 				default: {
-					fill: countries.some(country => country.id == iso_n3) ? fillProperties(geography.properties.gapminder.hdi_2017[this.props.year]) : '#ECEFF1',
+					fill: selectedCountries.some(country => country.id == iso_n3) ? fillProperties(geography.properties.gapminder.hdi_2017[this.props.year]) : '#ECEFF1',
 					stroke: "#607D8B",
 					strokeWidth: 0.75,
 					outline: "none"
@@ -183,7 +218,7 @@ class WorldMap extends Component {
 
 	render() {
 		const { height, width } = this.state;
-		const { center, zoom, increaseZoom, decreaseZoom, resetZoom, optimize, data, fetching, error } = this.props;
+		const { center, zoom, increaseZoom, decreaseZoom, resetZoom, optimize, data, fetching, error, selectedCountries } = this.props;
 
 		if (fetching || error || !data) return null;
 
@@ -242,7 +277,7 @@ class WorldMap extends Component {
 										}
 									</Geographies>
 									<Markers>
-										{ data.filter(d => d.properties.gapminder.debt_by_gdp[this.props.year]).map((country,i)=> {
+										{ data.filter(d => d.properties.gapminder.debt_by_gdp[this.props.year] && this.filterTest(d)).map((country,i)=> {
 
 											const debtToGDP = Math.round(country.properties.gapminder.debt_by_gdp[this.props.year])
 											return(
@@ -298,7 +333,9 @@ const mapStateToProps = state => ({
 	fetching: state.general.fetching,
 	data: state.general.data,
 	year: state.filters.year,
-	countries: state.filters.selectedCountries
+	selectedCountries:state.filters.selectedCountries,
+	hdi:state.filters.hdi,
+	debt:state.filters.debt
 });
 
 const mapDispatchToProps = dispatch => {

@@ -7,7 +7,7 @@ const filtersState = {
 	selectedCountries: [...countryNames],
 	debt: {
 		min: 0,
-		max: 20
+		max: 20000
 	},
 	population: {
 		min: null,
