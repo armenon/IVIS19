@@ -14,7 +14,7 @@
 
 .variables-image {
 	box-shadow: $box-shadow;
-	max-width: 550px;
+	max-width: 560px;
 	height: auto;
 	position: relative;
 	left: 0;
@@ -23,6 +23,9 @@
 	transition: 0.3s all cubic-bezier(1, 0, 0, 1);
 	&.full {
 		margin-left: 0px;
+	}
+	&.graph {
+		max-width: 350px;
 	}
 }
 

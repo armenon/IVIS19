@@ -5,10 +5,14 @@ import './VariablesLegend.scss';
 
 class VariablesLegend extends Component {
 	render() {
-		const { isFull } = this.props;
+		const { isFull, graphVisible } = this.props;
+		var imagePath = "/img/legend.png";
+		if(graphVisible) {
+			imagePath = "/img/legendGraph.png";
+		}
 		return (
 			<div className="variables-container">
-				<img src="/img/legend.png" alt="Legend" className={!isFull ? 'variables-image' : 'variables-image full'}/>
+				<img src={`${imagePath}`} alt="Legend" className={!isFull ?  !graphVisible ? 'variables-image' : 'variables-image graph' : 'variables-image full'}/>
 			</div>
 		);
 	}
