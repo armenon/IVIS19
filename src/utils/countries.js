@@ -69,7 +69,7 @@ export const countryNames = [
   },
   {
     "id": 68,
-    "name": "Bolivia"
+    "name": "Bolivia, Plurinational State of"
   },
   {
     "id": 70,
@@ -521,7 +521,7 @@ export const countryNames = [
   },
   {
     "id": 643,
-    "name": "Russia"
+    "name": "Russian Federation"
   },
   {
     "id": 646,
@@ -673,7 +673,7 @@ export const countryNames = [
   },
   {
     "id": 862,
-    "name": "Venezuela"
+    "name": "Venezuela, Bolivarian Republic of"
   },
   {
     "id": 704,

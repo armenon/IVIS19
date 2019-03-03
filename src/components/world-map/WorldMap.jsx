@@ -96,6 +96,7 @@ class WorldMap extends Component {
 
 
 	handleClick = async (geography, evt) => {
+		console.log(geography)
 		console.log('should ignore?', this.ignoreClick)
 		if (this.ignoreClick) return;
 
@@ -145,13 +146,14 @@ class WorldMap extends Component {
 	}
 
 	filterTest = (geography) => {
-		const {name } = geography.properties;
+
+		const {name, formal_en, name_long, iso_n3 } = geography.properties;
 		const { selectedCountries, year, debt, hdi } = this.props;
 		const geodebt = geography.properties.gapminder.external_debt_total_us_not_inflation_adjusted[year]/1000000000
 		const geohdi = geography.properties.gapminder.hdi_2017[year]
 
-
-		if(selectedCountries.findIndex(i=> i.name==name) === -1 ||
+		
+		if(selectedCountries.findIndex(i=> i.id==parseInt(iso_n3) || i.name==formal_en || i.name==name|| i.name==name_long) === -1 ||
 			geodebt<debt.min || geodebt>debt.max ||
 			geohdi<hdi.min || geohdi>hdi.max
 			){
