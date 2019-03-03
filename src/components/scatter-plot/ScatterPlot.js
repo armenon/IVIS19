@@ -97,7 +97,7 @@ class ScatterPlot extends Component {
 		const {name, formal_en, name_long, iso_n3 } = geography.properties;
 		const { selectedCountries, year, debt, hdi } = this.props;
     const geodebtgdp = geography.properties.gapminder.debt_by_gdp[year]
-		const geodebt = geography.properties.gapminder.external_debt_total_us_not_inflation_adjusted[year]/1000000000
+		const geodebt = geography.properties.gapminder.central_debt_total[year]
 		const geohdi = geography.properties.gapminder.hdi_2017[year]
 
 
@@ -125,9 +125,9 @@ class ScatterPlot extends Component {
 
   getData(country){
     const hdi = country.properties.gapminder.hdi_2017[this.props.year] || null;
-    const debt = country.properties.gapminder.external_debt_total_us_not_inflation_adjusted[this.props.year] || 0;
+    const debt = country.properties.gapminder.debt_by_gdp[this.props.year]/100*country.properties.gapminder.total_gdp_us_inflation_adjusted[this.props.year] || null;
     const debtToGDP= country.properties.gapminder.debt_by_gdp[this.props.year] || null
-
+    //17 300 000 000 000
     return(
       {
         x:hdi,
@@ -166,7 +166,7 @@ class ScatterPlot extends Component {
 
 
     const filteredData = data.filter(d => this.filterTest(d)) //d.properties.gapminder.debt_by_gdp[this.props.year] && d.properties.gapminder.hdi_2017[this.props.year])
-    const plotData = filteredData.map(c => this.getData(c)).sort((a,b)=>a.size-b.size)
+    const plotData = filteredData.map(c => this.getData(c)) //.sort((a,b)=>a.size-b.size)
     const labelData = plotData.filter(a => a.y <= lastDrawLocation.top && a.y>=lastDrawLocation.bottom && a.x>=lastDrawLocation.left && a.x<=lastDrawLocation.right ).sort((a,b)=>b.size-a.size).slice(0,7)
 		return (
       <div
