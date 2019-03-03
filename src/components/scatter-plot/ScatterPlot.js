@@ -69,10 +69,10 @@ class ScatterPlot extends Component {
       width:null,
       country: null,
       lastDrawLocation: {
-        top:2000,
-        bottom:0,
-        left:0,
-        right:1
+        top:props.debt.max,
+        bottom:props.debt.min,
+        left:props.hdi.min,
+        right:props.hdi.max
       },
     }
   }
@@ -81,6 +81,26 @@ class ScatterPlot extends Component {
   }
 
 
+  filterTest = (geography) => {
+
+		const {name, formal_en, name_long, iso_n3 } = geography.properties;
+		const { selectedCountries, year, debt, hdi } = this.props;
+    const geodebtgdp = geography.properties.gapminder.debt_by_gdp[year]
+		const geodebt = geography.properties.gapminder.external_debt_total_us_not_inflation_adjusted[year]/1000000000
+		const geohdi = geography.properties.gapminder.hdi_2017[year]
+
+
+		if(!geodebtgdp || !geohdi ||
+      selectedCountries.findIndex(i=> i.id==parseInt(iso_n3) || i.name==formal_en || i.name==name|| i.name==name_long) === -1 ||
+			geodebt<debt.min || geodebt>debt.max ||
+			geohdi<hdi.min || geohdi>hdi.max
+			){
+			return false
+		} else {
+			return true
+		}
+
+	}
 
   handleHover(e) {
     console.log(e)
@@ -96,7 +116,6 @@ class ScatterPlot extends Component {
     const hdi = country.properties.gapminder.hdi_2017[this.props.year] || null;
     const debt = country.properties.gapminder.external_debt_total_us_not_inflation_adjusted[this.props.year] || 0;
     const debtToGDP= country.properties.gapminder.debt_by_gdp[this.props.year] || null
-
 
     return(
       {
@@ -124,10 +143,10 @@ console.log(this.props)
     const { lastDrawLocation } = this.state;
 
     const reset = {
-        top:2000,
-        bottom:0,
-        left:0,
-        right:1
+        top:this.props.debt.max,
+        bottom:this.props.debt.min,
+        left:this.props.hdi.min,
+        right:this.props.hdi.max
       }
     //x: happiness y:debt? size: debtToGDP?
     if (!!fetching || !!error || !data){
@@ -135,16 +154,16 @@ console.log(this.props)
     }
 
 
-    const filteredData = data.filter(d => d.properties.gapminder.debt_by_gdp[this.props.year] && d.properties.gapminder.hdi_2017[this.props.year])
+    const filteredData = data.filter(d => this.filterTest(d)) //d.properties.gapminder.debt_by_gdp[this.props.year] && d.properties.gapminder.hdi_2017[this.props.year])
     const plotData = filteredData.map(c => this.getData(c)).sort((a,b)=>a.size-b.size)
     const labelData = plotData.filter(a => a.y <= lastDrawLocation.top && a.y>=lastDrawLocation.bottom && a.x>=lastDrawLocation.left && a.x<=lastDrawLocation.right ).sort((a,b)=>b.size-a.size).slice(0,7)
 		return (
       <div
         data-tip>
        <XYPlot
-					width={window.innerWidth - 460}
-					height={window.innerHeight - 120}
-					style={{marginLeft: '420px', marginTop: '40px', marginRight: '40px'}}
+					width={window.innerWidth - 80}
+					height={window.innerHeight - 160}
+					style={{marginLeft: '40px', marginTop: '40px', marginRight: '40px'}}
 
 
 
@@ -156,7 +175,7 @@ console.log(this.props)
               ]
             }
           yDomain={
-            lastDrawLocation && [
+            lastDrawLocation  && [
               lastDrawLocation.bottom,
               lastDrawLocation.top
             ]
@@ -219,7 +238,10 @@ const mapStateToProps = state => ({
 	error: state.general.error,
 	fetching: state.general.fetching,
 	data: state.general.data,
-  year: state.filters.year
+  year: state.filters.year,
+  selectedCountries:state.filters.selectedCountries,
+  hdi:state.filters.hdi,
+  debt:state.filters.debt
 });
 
 const mapDispatchToProps = dispatch => {
