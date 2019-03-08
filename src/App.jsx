@@ -18,9 +18,20 @@ class App extends Component {
 	render() {
 		return (
 			<>
-				<Button onClick={this.props.toggleVisualization} id="filterButton" bsPrefix="btn btn-primary box-shadow graph">{!this.props.graph ? (<span><i class="fas fa-chart-area"></i> Show graph</span>) : (<span><i class="fas fa-globe-americas"></i> Show map</span>)}</Button>
-				<SideBar isGraphShown={this.props.graph} />
-				{this.props.graph ? <ScatterPlot /> : <WorldMap />}
+				<div className="mobile-message">
+					<div className="logo d-flex large">
+						<i className="fas fa-dollar-sign"></i>
+						<div className="spacing-h small"></div>
+						<h1>World debt</h1>
+					</div>
+					<div className="spacing"></div>
+					<p>Please visit us from a desktop, this visualization is not very responsive...</p>
+				</div>
+				<div className="world-debt-app">
+					<Button onClick={this.props.toggleVisualization} id="filterButton" bsPrefix="btn btn-primary box-shadow graph">{!this.props.graph ? (<span><i class="fas fa-chart-area"></i> Show graph</span>) : (<span><i class="fas fa-globe-americas"></i> Show map</span>)}</Button>
+					<SideBar isGraphShown={this.props.graph} />
+					{this.props.graph ? <ScatterPlot /> : <WorldMap />}
+				</div>
 			</>
 		);
 	}
