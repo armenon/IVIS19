@@ -24,7 +24,7 @@ class About extends Component {
 							<div className="spacing medium"></div>
 							<p className="label color-dark">Created by</p>
 							<div className="person">
-								<img src="" alt=""/>
+								<img src="/img/marco.jpg" alt=""/>
 								<div>
 									<p>
 										<b>Marco Koivisto</b> <br/>
@@ -37,7 +37,7 @@ class About extends Component {
 								</div>
 							</div>
 							<div className="person">
-								<img src="" alt="" />
+								<img src="/img/marco.jpg" alt="" />
 								<div>
 									<p>
 										<b>Marco Koivisto</b> <br />
@@ -50,7 +50,7 @@ class About extends Component {
 								</div>
 							</div>
 							<div className="person">
-								<img src="" alt="" />
+								<img src="/img/marco.jpg" alt="" />
 								<div>
 									<p>
 										<b>Marco Koivisto</b> <br />
@@ -63,7 +63,7 @@ class About extends Component {
 								</div>
 							</div>
 							<div className="person">
-								<img src="" alt="" />
+								<img src="/img/marco.jpg" alt="" />
 								<div>
 									<p>
 										<b>Marco Koivisto</b> <br />
@@ -76,7 +76,7 @@ class About extends Component {
 								</div>
 							</div>
 							<div className="person">
-								<img src="" alt="" />
+								<img src="/img/marco.jpg" alt="" />
 								<div>
 									<p>
 										<b>Marco Koivisto</b> <br />
@@ -89,7 +89,7 @@ class About extends Component {
 								</div>
 							</div>
 							<div className="person">
-								<img src="" alt="" />
+								<img src="/img/marco.jpg" alt="" />
 								<div>
 									<p>
 										<b>Marco Koivisto</b> <br />
@@ -102,7 +102,7 @@ class About extends Component {
 								</div>
 							</div>
 							<div className="person">
-								<img src="" alt="" />
+								<img src="/img/marco.jpg" alt="" />
 								<div>
 									<p>
 										<b>Marco Koivisto</b> <br />
