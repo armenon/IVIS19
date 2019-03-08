@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import { Button } from 'react-bootstrap';
 import FilterOption from '../filter-options/FilterOptions'
 import { connect } from 'react-redux'
@@ -107,8 +108,9 @@ class SideBar extends Component {
 						<FilterOption beforeVal="" afterVal="" filterName="HDI" filterLeftValue="0" filterRightValue="1"
 							minFilterValue={0} maxFilterValue={1} defaultValueMin={hdi.min} 
 							defaultValueMax={hdi.max} step={0.01} afterChangeFunction={this.handleHdiChange}></FilterOption>
-
 					</div>
+					<div className="spacing small"></div>
+					<Link to="/about/">About the visualization <i className="fas fa-arrow-right"></i></Link>
 				</div>
 				<TimeBar onYearChange={this.handleYearChange} year={year} isFull={!isShown && !isGraphShown} />
 				<VariablesLegend isFull={!isShown && !isGraphShown} graphVisible={isGraphShown} />

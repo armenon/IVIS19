@@ -1,0 +1,52 @@
+@import './globals';
+
+.world-debt-about {
+	h1 {
+		font-weight: bold;
+	}
+	h2 {
+		font-weight: bold;
+	}
+	p {
+		font-size: 18px;
+	}
+	.logo {
+		i, p, h1 {
+			color: $color-black;
+		}
+	}
+	.person {
+		display: flex;
+		align-items: center;
+		img {
+			border-radius: $border-radius;
+			display: block;
+			width: 100px;
+			height: 100px;
+			object-fit: cover;
+			background-color: $color-gray;
+			margin-right: 25px;
+		}
+		p {
+			font-size: 18px;
+			span {
+				font-size: 15px;
+				opacity: 0.8;
+				display: flex;
+				align-items: center;
+				i {
+					font-size: 6px;
+					margin-right: 5px;
+				}
+			}
+			margin-bottom: 5px;
+			&:last-child {
+				margin-bottom: 0px;
+			}
+		}
+		margin-bottom: 30px;
+		&:last-child {
+			margin-bottom: 0px;
+		}
+	}
+}

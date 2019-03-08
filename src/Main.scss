@@ -1,0 +1,21 @@
+@import './globals';
+.MuiSelect-select-15 {
+	padding: 10px !important;
+}
+.download-buttons {
+	position: absolute;
+	bottom: 5px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+
+	a {
+		text-decoration: none;
+
+	}
+}
+.btn.graph {
+	top: 40px;
+	right: 40px;
+	left: auto!important;
+}
