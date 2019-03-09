@@ -37,15 +37,15 @@ class About extends Component {
 								</div>
 							</div>
 							<div className="person">
-								<img src="/img/marco.jpg" alt="" />
+								<img src="/img/rafa.jpg" alt="" />
 								<div>
 									<p>
-										<b>Marco Koivisto</b> <br />
-										marcoko@kth.se
+										<b>Rafael Lucena</b> <br />
+										rafaella@kth.se
 									</p>
 									<p>
 										<span><i className="fa fa-circle"></i> Frontend</span>
-										<span><i className="fa fa-circle"></i> Design</span>
+										<span><i className="fa fa-circle"></i> Interaction</span>
 									</p>
 								</div>
 							</div>
@@ -126,8 +126,8 @@ class About extends Component {
 							<div className="spacing medium"></div>
 							<h2>What was learnt during the creation?</h2>
 							<p>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet libero sed mauris venenatis mollis nec ullamcorper tellus. Nam nec diam et quam viverra varius. <br /> <br />
-								Vestibulum finibus metus et lectus ullamcorper aliquet. Aenean varius orci ut velit volutpat, a sagittis ligula elementum. Nulla a elit lectus. Nam leo diam, ultricies ac nisl eu, pretium fermentum turpis.
+								Thanks to this visualziation we learned how to retrieve data from different sources and blend them all together. Most of us also learned how to use web frameworks and work on a tema for a web project, which is an important skill for nowaday's emplyment market. <br /> <br />
+								Regarding technology, we learned how to use D3, React and a lot of JavaScript, which are widely used in projects of all fields.
 							</p>
 						</Col>
 					</Row>
