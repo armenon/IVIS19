@@ -116,7 +116,7 @@ class About extends Component {
 							</div>
 						</Col>
 						<Col md="7">
-							Video here
+							
 							<div className="spacing large"></div>
 							<h1>What is the purpose of the visualization?</h1>
 							<p>
@@ -129,6 +129,7 @@ class About extends Component {
 								Thanks to this visualziation we learned how to retrieve data from different sources and blend them all together. Most of us also learned how to use web frameworks and work on a tema for a web project, which is an important skill for nowaday's emplyment market. <br /> <br />
 								Regarding technology, we learned how to use D3, React and a lot of JavaScript, which are widely used in projects of all fields.
 							</p>
+							<iframe src="https://player.vimeo.com/video/322717207" className="video" title="This is a unique title" frameBorder="0" allowFullScreen></iframe>
 						</Col>
 					</Row>
 					<div className="spacing large"></div>
