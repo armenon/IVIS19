@@ -111,7 +111,6 @@ class About extends Component {
 									<p>
 										<span><i className="fa fa-circle"></i> Design</span>
 										<span><i className="fa fa-circle"></i> Video Edition</span>
-										<span><i className="fa fa-circle"></i> Data collection</span>
 									</p>
 								</div>
 							</div>
