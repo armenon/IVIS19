@@ -116,20 +116,17 @@ class About extends Component {
 							</div>
 						</Col>
 						<Col md="7">
-							
-							<div className="spacing large"></div>
+							<iframe src="https://player.vimeo.com/video/322717207" title="This is a unique title" frameBorder="0" allowFullScreen></iframe>
+							<div className="spacing medium"></div>
 							<h1>What is the purpose of the visualization?</h1>
 							<p>
-								The purpose of this visualization is to visualize how macroeconomics affect everyday lives, increasing people's conscience by displaying data that matters. <br/> <br/>
-								
+								The visualization shows how macroeconomics affect everyday lives. We hope the visualization can increase people's conscience by displaying data which matters. <br/> <br/>
 							</p>
-							<div className="spacing medium"></div>
 							<h2>What was learnt during the creation?</h2>
 							<p>
-								Thanks to this visualziation we learned how to retrieve data from different sources and blend them all together. Most of us also learned how to use web frameworks and work on a tema for a web project, which is an important skill for nowaday's emplyment market. <br /> <br />
-								Regarding technology, we learned how to use D3, React and a lot of JavaScript, which are widely used in projects of all fields.
+								Thanks to the creation of this visualziation we as a group have learnt how to retrieve data from different sources and blend them together in a easy consumable matter. Most of us also incresed our knowledge of using web frameworks and working in team for a web project. Which we see as an important skill for today's employment market. <br/> <br/>
+								When it comes to technology, we increased our knowledge in the use of D3, React and a JavaScript in general.
 							</p>
-							<iframe src="https://player.vimeo.com/video/322717207" className="video" title="This is a unique title" frameBorder="0" allowFullScreen></iframe>
 						</Col>
 					</Row>
 					<div className="spacing large"></div>

@@ -1,5 +1,11 @@
 @import './globals';
 
+iframe {
+	max-height: 360px;
+	height: 100%;
+	width: 100%;
+}
+
 .world-debt-about {
 	h1 {
 		font-weight: bold;
@@ -16,10 +22,7 @@
 		}
 	}
 	.video {
-		position: absolute; 
 		width:100%;
-		height: 50%;
-		margin-top:0;
 	}
 
 	.person {
