@@ -63,11 +63,24 @@ class About extends Component {
 								</div>
 							</div>
 							<div className="person">
-								<img src="/img/marco.jpg" alt="" />
+								<img src="/img/arjun.jpg" alt="" />
 								<div>
 									<p>
-										<b>Marco Koivisto</b> <br />
-										marcoko@kth.se
+										<b>Arjun Rajendran</b> <br />
+										armenon@kth.se
+									</p>
+									<p>
+										<span><i className="fa fa-circle"></i> Design</span>
+										<span><i className="fa fa-circle"></i> Research</span>
+									</p>
+								</div>
+							</div>
+							<div className="person">
+								<img src="/img/magnus.jpg" alt="" />
+								<div>
+									<p>
+										<b>Magnus Lundh Haaland</b> <br />
+										magnuslh@kth.se
 									</p>
 									<p>
 										<span><i className="fa fa-circle"></i> Frontend</span>
@@ -76,41 +89,29 @@ class About extends Component {
 								</div>
 							</div>
 							<div className="person">
-								<img src="/img/marco.jpg" alt="" />
+								<img src="/img/diego.jpg" alt="" />
 								<div>
 									<p>
-										<b>Marco Koivisto</b> <br />
-										marcoko@kth.se
+										<b>Diego Martin</b> <br />
+										diegom@kth.se
 									</p>
 									<p>
 										<span><i className="fa fa-circle"></i> Frontend</span>
-										<span><i className="fa fa-circle"></i> Design</span>
+										<span><i className="fa fa-circle"></i> Interaction</span>
 									</p>
 								</div>
 							</div>
 							<div className="person">
-								<img src="/img/marco.jpg" alt="" />
+								<img src="/img/jonathan.jpg" alt="" />
 								<div>
 									<p>
-										<b>Marco Koivisto</b> <br />
-										marcoko@kth.se
+										<b>Jonathan Ramirez</b> <br />
+										jramirez@kth.se
 									</p>
 									<p>
-										<span><i className="fa fa-circle"></i> Frontend</span>
 										<span><i className="fa fa-circle"></i> Design</span>
-									</p>
-								</div>
-							</div>
-							<div className="person">
-								<img src="/img/marco.jpg" alt="" />
-								<div>
-									<p>
-										<b>Marco Koivisto</b> <br />
-										marcoko@kth.se
-									</p>
-									<p>
-										<span><i className="fa fa-circle"></i> Frontend</span>
-										<span><i className="fa fa-circle"></i> Design</span>
+										<span><i className="fa fa-circle"></i> Video Edition</span>
+										<span><i className="fa fa-circle"></i> Data collection</span>
 									</p>
 								</div>
 							</div>
