@@ -70,8 +70,8 @@ class About extends Component {
 										armenon@kth.se
 									</p>
 									<p>
-										<span><i className="fa fa-circle"></i> Design</span>
-										<span><i className="fa fa-circle"></i> Research</span>
+										<span><i className="fa fa-circle"></i> Wireframing</span>
+										<span><i className="fa fa-circle"></i> Prototyping</span>
 									</p>
 								</div>
 							</div>
